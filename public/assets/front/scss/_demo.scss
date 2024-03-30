@@ -1,0 +1,207 @@
+/*==========================================
+Start Demo Panel Style CSS
+===========================================*/
+.demo-panel {
+  &-wrap {
+    background-color: $white;
+    box-shadow: -3px 0 50px -2px rgba(0, 0, 0, .14);
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 350px;
+    max-width: 80%;
+    transition: 0.4s;
+    transform: translateX(100%);
+    z-index: 99999;
+
+    &.open {
+      transform: translateX(0);
+
+      .demo-panel-content {
+        &:before {
+          opacity: 0;
+          visibility: hidden;
+        }
+      }
+    }
+  }
+
+  &-inner {
+    position: relative;
+    overflow-x: auto;
+    height: 100%;
+
+    &::-webkit-scrollbar-track {
+      background-color: $offwhite;
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+
+    &::-webkit-scrollbar {
+      background-color: $offwhite;
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $brand-color;
+      border: 1px solid $brand-color;
+    }
+  }
+
+  &-content {
+    padding: 60px 30px;
+    position: relative;
+
+    &:before {
+      content: "";
+      background: transparent;
+      position: absolute;
+      left: 0;
+      top: 0;
+      transition: 0.3s;
+      transition-delay: 0.6s;
+      height: 100%;
+      width: 100%;
+      z-index: 1;
+    }
+  }
+
+  &-toolbar {
+    box-shadow: -3px 0 10px -2px rgba(0, 0, 0, .1);
+    background: $white;
+    position: absolute;
+    border-radius: 5px 0 0 5px;
+    border-right: 0;
+    color: $black;
+    display: block;
+    font-size: 18px;
+    padding: 20px 0;
+    top: 250px;
+    right: 100%;
+    text-align: center;
+    width: 40px;
+
+    &:before {
+      content: 'All Demos';
+      color: $black-soft;
+      position: absolute;
+      transform: rotate(90deg);
+      width: 80px;
+      top: -80px;
+      left: -23px;
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+
+    &:after {
+      content: '\f107';
+      font-family: $font-font_awesome;
+      color: $brand-color;
+      position: absolute;
+      top: -40px;
+      font-size: 28px;
+      line-height: 1;
+      left: 8px;
+      animation: updown 1s infinite;
+    }
+
+    a {
+      color: inherit;
+      display: block;
+      margin-bottom: 15px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &-head {
+    font-size: 16px;
+
+    .btn-bordered {
+      margin-bottom: 30px;
+      padding: 15px 30px;
+    }
+  }
+
+  &-demo {
+    .row {
+      margin-left: -10px;
+      margin-right: -10px;
+
+      [class*="col"] {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+    }
+
+    .demo-pic {
+      border-radius: 5px;
+      box-shadow: 0 7px 20px rgba(0, 0, 0, .1);
+      overflow: hidden;
+      transition: 0.3s;
+      margin-top: 20px;
+      max-width: 150px;
+      margin-left: auto;
+      margin-right: auto;
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, .2);
+      }
+    }
+  }
+}
+
+.tippy-popper {
+  .tippy-tooltip.tomato-theme {
+    background-color: $black-soft;
+    color: $white;
+  }
+
+  &[x-placement^='top'] {
+    .tippy-tooltip.tomato-theme {
+      .tippy-arrow {
+        border-top-color: $black-soft !important;
+      }
+    }
+  }
+}
+
+@keyframes updown {
+  0% {
+    top: -40px;
+  }
+
+  50% {
+    top: -35px;
+  }
+
+  100% {
+    top: -40px;
+  }
+}
+
+.demo-overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  cursor: url(../img/icons/cancel.png), auto;
+  z-index: 9999;
+  display: none;
+}
+
+.demo-fix {
+  overflow: hidden;
+
+  .demo-overlay {
+    display: block;
+  }
+}

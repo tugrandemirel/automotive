@@ -1,0 +1,148 @@
+/*========================
+70. Timeline Style Css
+===========================*/
+
+.cd-timeline {
+  margin: 0;
+  padding: 0;
+
+  &:before {
+    display: none;
+  }
+
+  &-block {
+    margin: 0;
+    padding-bottom: 40px;
+
+    &:last-child {
+      padding-bottom: 0;
+
+      &:before {
+        @media #{$xl-device} {
+          display: none;
+        }
+      }
+    }
+
+    &:nth-child(2n) {
+      .cd-timeline-content {
+        text-align: right;
+        float: left;
+
+        @media #{$md-device, $sm-device} {
+          text-align: left;
+        }
+      }
+    }
+
+    &:before {
+      background-color: $offwhite;
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 0;
+      height: 100%;
+      width: 4px;
+
+      @media #{$md-device, $sm-device} {
+        left: 4px;
+        transform: none;
+      }
+    }
+
+    .cd-timeline-dot {
+      background-color: $brand-color;
+      border-radius: 50%;
+      display: block;
+      height: 12px;
+      left: 50%;
+      position: absolute;
+      top: 0;
+      transform: translateX(-50%);
+      width: 12px;
+
+      @media #{$md-device, $sm-device} {
+        left: 0;
+        transform: none;
+      }
+    }
+  }
+
+  &-content {
+    background-color: transparent;
+    box-shadow: none;
+    padding: 0;
+    text-align: left;
+    font-size: 16px;
+    color: $paragraph;
+    float: right;
+
+    @media #{$sm-device} {
+      margin-left: 30px;
+    }
+
+    &:before {
+      display: none;
+    }
+
+    @media #{$md-device, $sm-device} {
+      text-align: left;
+    }
+
+    h5 {
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1;
+      letter-spacing: 1.75px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+
+  &--aligned {
+    background-color: $offwhite;
+
+    .cd-timeline-block {
+      border-bottom: 1px dotted $brand-color;
+      padding: 30px;
+
+      &:before {
+        background-color: $brand-color;
+        left: 0;
+        transform: none;
+        display: block;
+      }
+
+      &:first-child{
+        .cd-timeline-dot{
+          display: none;
+        }
+      }
+
+      &:last-child{
+        border-bottom: 0;
+      }
+
+      .cd-timeline-content {
+        width: 100%;
+
+        &:nth-child(2n) {
+          float: inherit;
+          text-align: inherit;
+        }
+      }
+
+      .cd-timeline-dot {
+        left: -6px;
+        top: -8px;
+        transform: none;
+        height: 15px;
+        width: 15px;
+      }
+    }
+  }
+}

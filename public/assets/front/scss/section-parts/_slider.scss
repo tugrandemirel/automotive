@@ -1,0 +1,50 @@
+/*=============================
+69. Slider CSS Style
+===============================*/
+.slider-christmas {
+  .product-content {
+    display: flex;
+    align-items: center;
+    margin-top: -30px;
+
+    &-text {
+      margin-top: -35px;
+    }
+
+    h2, h3, h4 {
+      line-height: 1.2;
+      margin-bottom: 0;
+    }
+
+    h4 {
+      color: $red;
+      font-family: 'Dancing Script', cursive;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 60px;
+      margin-bottom: 5px;
+    }
+
+    h2 {
+      font-size: 80px;
+
+      @media #{$sm-device} {
+        font-size: 50px;
+        margin-top: 10px;
+        margin-bottom: 5px;
+      }
+    }
+
+    h3 {
+      font-size: 42px;
+
+      @media #{$sm-device} {
+        font-size: 32px;
+      }
+    }
+
+    .btn-shop {
+      margin-top: 10px;
+    }
+  }
+}

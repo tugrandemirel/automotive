@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Models;
+
+use App\Enum\Company\CompanyCreditCanPayEnum;
+use App\Enum\Company\CompanyCurrentCanPayEnum;
+use App\Enum\Company\CompanyCurrentEnum;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Mtvs\EloquentHashids\HasHashid;
+use Mtvs\EloquentHashids\HashidRouting;
+
+class Company extends Model
+{
+    use HasFactory;
+    use HasHashid;
+    use HashidRouting;
+
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'code',
+        'bank_information',
+        'description',
+        'file',
+        'current',
+        'current_can_pay',
+        'credit_can_pay',
+        'general_discount',
+        'advance_discount',
+        'one_shot_discount',
+        'city',
+        'district',
+        'address',
+        'tax_administration',
+        'identity_number',
+    ];
+
+    protected $casts = [
+        'address' => 'array',
+        'current' => CompanyCurrentEnum::class,
+        'current_can_pay' => CompanyCurrentCanPayEnum::class,
+        'credit_can_pay' => CompanyCreditCanPayEnum::class,
+        'general_discount' => 'float',
+        'advance_discount' => 'float',
+        'one_shot_discount' => 'float',
+    ];
+
+    public static function booted(): void
+    {
+        static::deleting(function (Company $company){
+            $company->authorizedPeople()->delete();
+        });
+    }
+
+    public function authorizedPeople(): HasMany
+    {
+        return $this->hasMany(AuthorizedPerson::class);
+    }
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class);
+    }
+}
