@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Product\ProductController;
 use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\IndexController;
+use App\Http\Controllers\Front\OrderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,12 +23,20 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth'])->group(function (){
     Route::get('/', [IndexController::class, 'index'])->name('home');
     Route::get('/firma-bilgilerim', [IndexController::class, 'getMeCompany'])->name('company');
+
     Route::prefix('sepetim')->as('cart.')->group(function (){
         Route::get('/', [CartController::class, 'index'])->name('index');
         Route::post('/store', [CartController::class, 'store'])->name('store');
+        Route::post('/update/{cart}', [CartController::class, 'update'])->name('update');
         Route::delete('/destroy/{cart}', [CartController::class, 'destroy'])->name('destroy');
         Route::delete('/single-destroy/{cart}', [CartController::class, 'singleDestroy'])->name('single-destroy');
     });
+
+    Route::resource('siparislerim', OrderController::class)
+        ->parameter('siparislerim', 'order')
+        ->names('order')
+        ->except('show');
+
 });
 
 

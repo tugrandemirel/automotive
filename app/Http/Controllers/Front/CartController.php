@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Enum\Product\ProductStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Front\Cart\CartStoreRequest;
+use App\Http\Requests\Front\Cart\CartUpdateRequest;
 use App\Http\Requests\Front\Cart\SingleDestroyRequest;
 use App\Models\Cart;
 use App\Models\Company;
@@ -16,8 +17,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class CartController extends Controller
 {
@@ -63,15 +62,31 @@ class CartController extends Controller
         $attributes->put('brand_id', $product?->brand_id);
         $attributes->put('currency_id', $product?->currency_id);
         $attributes->put('product_code', $product?->code);
-        $attributes->put('price', $product?->sale_price);
-        $attributes->put('total_price', $attributes->get('quantity') * $product?->sale_price);
+        $attributes->put('price', $product?->sale_price + ($product?->sale_price * 20 /100));
+        $attributes->put('total_price', $attributes->get('quantity') * ($product?->sale_price + ($product?->sale_price * 20 /100)));
         $attributes->put('unit', $product?->unit);
         $attributes->put('general_discount', $user?->company?->general_discount);
         $attributes->put('vat', 20);
 
-        throw_unless($user->carts()->create($attributes->toArray()), QueryException::class, 'Ürün sepete eklenirken bir hata ile karşılaşıldı.');
+        throw_unless($user->carts()->updateOrCreate([ 'product_id' => $product?->id],$attributes->toArray()), QueryException::class, 'Ürün sepete eklenirken bir hata ile karşılaşıldı.');
 
         return $this->success(['message', 'Ürün başarılı bir şekilde sepete eklendi.']);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function update(CartUpdateRequest $request, string $id): JsonResponse
+    {
+        $attributes = collect($request->validated());
+
+        /** @var Cart $cart */
+        $cart = Cart::query()
+            ->findByHashidOrFail($id);
+
+        throw_unless($cart->update($attributes->toArray()), QueryException::class, 'Adet güncelleme işlemi sırasında bir hata ile karşılaşıldı');
+
+        return $this->success(['message' => 'Adet güncelleme işlemi başarılı bir şekilde gerçekleştirildi.']);
 
     }
 

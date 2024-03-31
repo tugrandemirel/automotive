@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html >
+<html>
 
 <head>
     <meta charset="utf-8">
@@ -39,7 +39,8 @@
         <div class="row">
             <!-- Start Logo Area Wrap -->
             <div class="col-6 col-lg-2"><a href="{{ route('home') }}" class="logo-wrap d-block"><img
-                        src="{{ asset('images/oto-yedek-parca.jpg') }}" class="sticky-logo" alt="Black Logo" width="100"></a></div>
+                        src="{{ asset('images/oto-yedek-parca.jpg') }}" class="sticky-logo" alt="Black Logo"
+                        width="100"></a></div>
             <!-- End Logo Area Wrap -->
             <!-- Start Main Navigation Wrap -->
             <div class="col-6 col-lg-10 my-auto ms-auto position-static">
@@ -49,7 +50,6 @@
                             <ul class="main-menu nav justify-content-end">
                                 <li class="dropdown-navbar arrow"><a href="{{ route('home') }}">ANASAYFA</a>
                                     <ul class="dropdown-nav mega-menu-wrap">
-
 
 
                                     </ul>
@@ -67,16 +67,20 @@
                                                  document.getElementById('logoutForm').submit();">ÇIKIŞ</a>
                                 </li>
                                 <form method="POST" id="logoutForm" action="{{ route('logout') }}">
-                                @csrf
+                                    @csrf
                                 </form>
                             </ul>
                         </nav>
                     </div>
                     <div class="off-canvas-area-wrap nav"><a href="{{ route('cart.index') }}" class="cart-button"><i
-                                class="fa fa-shopping-cart"></i> <span class="count">2</span> </a><button
-                            class="search-box-open d-block d-lg-none"><i class="fa fa-search"></i></button> <button
-                            class="off-canvas-btn d-none d-lg-block"><i class="fa fa-bars"></i></button> <button
-                            class="mobile-menu d-lg-none"><i class="fa fa-bars"></i></button></div>
+                                class="fa fa-shopping-cart"></i> <span class="count">2</span> </a>
+                        <button
+                            class="search-box-open d-block d-lg-none"><i class="fa fa-search"></i></button>
+                        <button
+                            class="off-canvas-btn d-none d-lg-block"><i class="fa fa-bars"></i></button>
+                        <button
+                            class="mobile-menu d-lg-none"><i class="fa fa-bars"></i></button>
+                    </div>
                 </div>
             </div><!-- End Main Navigation Wrap -->
         </div>
@@ -194,8 +198,10 @@
     <!--== Start Search Box Area ==-->
     <div class="search-box-wrapper text-center">
         <div class="search-box-content">
-            <form action="#" method="post"><input type="search" placeholder="Search"> <button class="btn-search"><i
-                        class="fa fa-search"></i></button></form>
+            <form action="#" method="post"><input type="search" placeholder="Search">
+                <button class="btn-search"><i
+                        class="fa fa-search"></i></button>
+            </form>
         </div>
     </div>
     <!--== End Search Box Area ==-->
@@ -227,13 +233,16 @@
                 <h2>Connect</h2>
                 <div class="social-links"><a href="#" class="trio-tooltip" data-tippy-content="Facebook"><i
                             class="fa fa-facebook"></i></a> <a href="#" class="trio-tooltip"
-                                                               data-tippy-content="Twitter"><i class="fa fa-twitter"></i></a> <a href="#"
-                                                                                                                                 class="trio-tooltip" data-tippy-content="Pinterest"><i class="fa fa-pinterest"></i></a> <a
+                                                               data-tippy-content="Twitter"><i
+                            class="fa fa-twitter"></i></a> <a href="#"
+                                                              class="trio-tooltip" data-tippy-content="Pinterest"><i
+                            class="fa fa-pinterest"></i></a> <a
                         href="#" class="trio-tooltip" data-tippy-content="Instagram"><i
                             class="fa fa-instagram"></i></a></div>
             </div>
-        </div><!-- Off Canvas Close Icon --> <button class="btn-close trio-tooltip" data-tippy-content="Close"
-                                                     data-tippy-placement="left"><i class="fa fa-close"></i></button>
+        </div><!-- Off Canvas Close Icon -->
+        <button class="btn-close trio-tooltip" data-tippy-content="Close"
+                data-tippy-placement="left"><i class="fa fa-close"></i></button>
     </div><!-- End Off Canvas Content Area -->
 </aside>
 <!--== End Off Canvas Area Wrapper ==-->
@@ -242,33 +251,22 @@
     <!-- Off Canvas Overlay -->
     <div class="off-canvas-overlay"></div><!-- Start Off Canvas Content Area -->
     <div class="off-canvas-content-wrap">
-        <div class="off-canvas-content"></div><!-- Off Canvas Close Icon --> <button class="btn-close trio-tooltip"
-                                                                                     data-tippy-content="Close" data-tippy-placement="right"><i class="fa fa-close"></i></button>
+        <div class="off-canvas-content"></div><!-- Off Canvas Close Icon -->
+        <button class="btn-close trio-tooltip"
+                data-tippy-content="Close" data-tippy-placement="right"><i class="fa fa-close"></i></button>
     </div><!-- End Off Canvas Content Area -->
 </aside>
 <!--== End Off Canvas Area Wrapper ==-->
 
 <!--=======================Javascript============================-->
 <!--=== All Vendor Js ===-->
+@include('sweetalert::alert')
 <script src="{{ asset('assets/front/js/vendor.js') }}"></script>
 <!--=== All Plugins Js ===-->
 <script src="{{ asset('assets/front/js/plugins.js') }}"></script>
 <!--=== Active Js ===-->
 <script src="{{ asset('assets/front/js/active.js') }}"></script>
-<!--=== Revolution Slider Js ===-->
-{{--<script src="{{ asset('assets/front/js/revslider/jquery.themepunch.tools.min.js') }}"></script>
-<script src="{{ asset('assets/front/js/revslider/jquery.themepunch.revolution.min.js') }}"></script>--}}
-<!-- SLIDER REVOLUTION 5.0 EXTENSIONS  (Load Extensions only on Local File Systems !  The following part can be removed on Server for On Demand Loading) -->
-{{--<script src="{{ asset('assets/front/js/revslider/extensions/revolution.extension.actions.min.js') }}"></script>
-<script src="{{ asset('assets/front/js/revslider/extensions/revolution.extension.carousel.min.js') }}"></script>
-<script src="{{ asset('assets/front/js/revslider/extensions/revolution.extension.kenburn.min.js') }}"></script>
-<script src="{{ asset('assets/front/js/revslider/extensions/revolution.extension.layeranimation.min.js') }}"></script>
-<script src="{{ asset('assets/front/js/revslider/extensions/revolution.extension.migration.min.js') }}"></script>
-<script src="{{ asset('assets/front/js/revslider/extensions/revolution.extension.navigation.min.js') }}"></script>
-<script src="{{ asset('assets/front/js/revslider/extensions/revolution.extension.parallax.min.js') }}"></script>
-<script src="{{ asset('assets/front/js/revslider/extensions/revolution.extension.slideanims.min.js') }}"></script>
-<script src="{{ asset('assets/front/js/revslider/extensions/revolution.extension.video.min.js') }}"></script>
-<script src="{{ asset('assets/front/js/revslider/revslider-active.js') }}"></script>--}}
+
 @stack('js')
 </body>
 

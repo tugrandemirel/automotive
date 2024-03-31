@@ -119,7 +119,7 @@
                                         {{ $product?->unit_formatted }}
                                     </td>
                                     <td>
-                                        {{ $product?->sale_price }} {{ $product?->currency?->symbol }}
+                                        {{ $product?->sale_price + ($product?->sale_price * 20/100) }} {{ $product?->currency?->symbol }}
                                     </td>
                                     <td>
                                         <div class="pro-qty"><input type="text" class="quantity" title="Quantity" name="quantity" min="0" value="0"></div>
@@ -162,11 +162,14 @@
                     data: {_token: '{{ csrf_token() }}', quantity : quantity, product_id: productId},
                     success: function (response) {
                         console.log(response)
+
                         Swal.fire({
                             title: "Başarılı!",
-                            text: response.data.message,
+                            text: response.responseJson.message,
                             icon: "success",
                             confirmButtonText: "Tamam!",
+                        }).then((result) => function () {
+                            location.reload()
                         })
                     },
                     error: function (error) {

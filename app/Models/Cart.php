@@ -28,6 +28,7 @@ class Cart extends Model
         'unit',
         'general_discount',
         'vat',
+        'status'
     ];
 
 
@@ -46,22 +47,18 @@ class Cart extends Model
         return $values[$this->unit->value];
     }
 
-    public function getNetPriceAttribute()
-    {
-        if (is_null($this->general_discount)) {
-            return $this->price;
-        }
-        return $this->price - ($this->price * $this->general_discount / 100);
-    }
-
     public function getNetPriceVatAttribute()
     {
-        return $this->getNetPriceAttribute() + ($this->getNetPriceAttribute() * $this->vat / 100);
+        if (is_null($this->general_discount) || $this->general_discount == 0) {
+            return $this->price;
+        }
+
+        return $this->price - ($this->price * $this->general_discount/100);
     }
 
-    public function getTotalAttribute()
+    public function getTotalPriceAttribute()
     {
-        return $this->getNetPriceAttribute() * $this->quantity;
+        return $this->getNetPriceVatAttribute() * $this->quantity;
     }
 
     public function user(): BelongsTo

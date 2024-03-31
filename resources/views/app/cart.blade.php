@@ -1,7 +1,6 @@
 @extends('app.layouts.app')
 @section('title', 'Sepetim')
 @section('content')
-
     <div class="page-wrapper">
         <section class="cart-page-area-wrapper mt-120 mt-md-80 mt-sm-60 mb-120 mb-md-80 mb-sm-60">
             <div class="container-fluid">
@@ -19,7 +18,6 @@
                                         <th>FİYAT</th>
                                         <th>ADET</th>
                                         <th>İSKONTO</th>
-                                        <th>NET FİYAT</th>
                                         <th>NET FİYAT + KDV</th>
                                         <th>TUTAR</th>
                                         <th>İŞLEMLER</th>
@@ -27,8 +25,7 @@
                                     </thead>
                                     <tbody>
                                     @php
-
-                                        $netPrice = 0;
+                                        $generalTotalPrice = 0;
                                         $totalPrice = 0;
                                     @endphp
                                     @forelse($carts as $cart)
@@ -53,11 +50,10 @@
                                                 {{ $cart?->unit_formatted ??'-' }}
                                             </td>
                                             <td>
-
                                                 @php
-                                                    $totalPrice += $cart?->price * $cart?->quantity;
+                                                    $totalPrice+= $cart?->price * $cart->quantity
                                                 @endphp
-                                                {{ $cart?->price ??'-' }}
+                                                {{ $cart?->price }}
                                             </td>
                                             <td>
                                                 <div class="pro-qty">
@@ -68,16 +64,14 @@
                                                 {{ $cart?->general_discount ??'-' }}
                                             </td>
                                             <td>
-                                                @php
-                                                    $netPrice += $cart?->net_price * $cart?->quantity;
-                                                @endphp
-                                                {{ $cart?->net_price ??'-' }}
-                                            </td>
-                                            <td>
+
                                                 {{ $cart?->net_price_vat ??'-' }}
                                             </td>
                                             <td>
-                                                {{ $cart?->total ??'-' }}
+                                                @php
+                                                    $generalTotalPrice+=$cart?->total_price;
+                                                @endphp
+                                                {{ $cart?->total_price ??'-' }}
                                             </td>
                                             <td>
                                                 <button type="button" data-id="{{ $cart->hashid() }}" class="btn btn-brand btn-small remove-product">
@@ -108,17 +102,9 @@
                                     </tr>
                                     <tr class="cart-sub-total">
                                         <th>İskonto</th>
-                                        <td>%{{ $company?->general_discount ?? '-' }}</td>
+                                        <td>{{ $totalPrice - $generalTotalPrice ?? '-' }}</td>
                                     </tr>
-                                    <tr class="cart-sub-total">
-                                        <th>Net Tutar</th>
-                                        <td>{{ $netPrice }}</td>
-                                    </tr>
-                                    <tr class="cart-sub-total">
-                                        <th>KDV</th>
-                                        <td>%20</td>
-                                    </tr>
-                                    {{--<tr class="shipping">
+                                {{--    <tr class="shipping">
                                         <th>Shipping</th>
                                         <td>
                                             <ul class="shipping-method">
@@ -148,12 +134,16 @@
                                     </tr>--}}
                                     <tr class="order-total">
                                         <th>Genel Toplam</th>
-                                        <td><b>{{ $netPrice + ($netPrice * 20 / 100) }}</b></td>
+                                        <td><b>{{ $generalTotalPrice }}</b></td>
                                     </tr>
                                 </table>
                             </div>
-                            <div class="proceed-checkout-btn"><a href=""
-                                                                 class="btn btn-brand d-block">Ödeme Gerçekleştir</a></div>
+                            <div class="proceed-checkout-btn">
+                                <button type="button" onclick="document.getElementById('cartForm').submit()" class="btn btn-brand d-block w-100">Sepet Onayla</button>
+                            </div>
+                            <form action="{{ route('order.store') }}" method="post" id="cartForm">
+                                @csrf
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -162,6 +152,71 @@
     </div>
 @endsection
 @push('js')
+    <script>
+        $(document).ready(function(){
+            // Artı butonuna tıklandığında
+            $('.qty-btn.inc').click(function(e){
+                e.preventDefault(); // Linkin varsayılan davranışını engelle
+                var input = $(this).prev('.quantity'); // Önceki kardeş olan giriş alanını seç
+                var currentValue = parseInt(input.val()); // Giriş alanının mevcut değerini al
+
+                input.val(currentValue); // Giriş alanına yeni değeri yerleştir
+
+                // Sepeti güncelleme işlemi
+                updateCart(input);
+            });
+
+            // Eksi butonuna tıklandığında
+            $('.qty-btn.dec').click(function(e){
+                e.preventDefault(); // Linkin varsayılan davranışını engelle
+                var input = $(this).siblings('.quantity'); // Sonraki kardeş olan giriş alanını seç
+
+                var currentValue = parseInt(input.val()); // Giriş alanının mevcut değerini al ve sayısal bir değere dönüştür
+
+                input.val(currentValue); // Giriş alanına yeni değeri yerleştir
+
+                // Sepeti güncelleme işlemi
+                updateCart(input);
+            });
+
+            // Sepeti güncelleme fonksiyonu
+            function updateCart(input) {
+                var cartId = input.data('id'); // Değişen miktarın hangi sepet öğesine ait olduğunu alın
+                var newQuantity = input.val(); // Yeni miktarı alın
+
+                let url = '{{ route('cart.update', ['cart' => '%%cartId%%']) }}'
+                url = url.replace('%%cartId%%', cartId)
+
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    dataType: 'json',
+                    data: {_token: '{{ csrf_token() }}', quantity: newQuantity},
+                    success: function (response) {
+                        Swal.fire({
+                            title: "Başarılı!",
+                            text: response.data.message,
+                            icon: "success",
+                            confirmButtonText: "Tamam!",
+                        })
+                    },
+                    error: function (error) {
+                        Swal.fire({
+                            title: "Hata!",
+                            text: error.message,
+                            icon: "error",
+                            confirmButtonText: "Tamam!",
+                        })
+                    }
+                })
+            }
+
+            $('.quantity').change(function () {
+                updateCart($(this))
+            })
+        });
+
+    </script>
     <script>
         $(document).ready(function () {
             $('.remove-product').click(function () {
