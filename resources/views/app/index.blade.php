@@ -73,9 +73,13 @@
             <div class="container">
                 <div class="shopping-cart-list-area">
                     <div class="shopping-cart-table table-responsive">
-                        <div class="single-input-item"><label for="com-name">Detaylı arama</label> <input
-                                type="text" id="com-name"
-                                placeholder="REF kodu, parça adı girerek arama yapabilirsiniz"></div>
+                        <div class="single-input-item">
+                            <label for="com-name">Detaylı arama</label>
+                            <form action="#">
+                                <div class="src-from-content d-flex"><input name="product" type="search" placeholder="REF kodu, ürün adı girerek arama yapabilirsiniz">
+                                    <button class="btn-search" type="submit"><i class="fa fa-search"></i></button></div>
+                            </form>
+                        </div>
                         <table class="table table-bordered text-center">
                             <thead>
                             <tr>

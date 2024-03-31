@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\User;
 
 use App\Enum\User\UserRoleEnum;
+use App\Filters\Admin\User\UserFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserStoreRequest;
 use App\Http\Requests\User\UserUpdateRequest;
@@ -22,11 +23,13 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
+    public function index(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         $users = User::query()
             ->where('role', UserRoleEnum::USER)
-            ->paginate();
+            ->with('company')
+            ->filter($request->all(), UserFilter::class)
+            ->paginate(20);
 
         return view('admin.user.index', compact('users'));
     }
@@ -34,7 +37,7 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         /** @var Company $companies */
         $companies = Company::query()

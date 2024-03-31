@@ -41,9 +41,16 @@
                 <div class="card-body border border-dashed border-end-0 border-start-0">
                     <form>
                         <div class="row g-3">
-                            <div class="col-xxl-5 col-sm-6">
+                            <div class="col-xxl-3 col-sm-3">
                                 <div class="search-box">
-                                    <input type="text" class="form-control search" placeholder="Firma Adı Giriniz">
+                                    <input type="text" class="form-control search" placeholder="Ad/Ünvan Giriniz" name="company" value="{{ request()->get('company') }}">
+                                    <i class="ri-search-line search-icon"></i>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-sm-3">
+                                <div class="search-box">
+                                    <input type="text" class="form-control search" name="fullname"
+                                           placeholder="Kullanıcı Adı Giriniz" value="{{ request()->get('fullname') }}">
                                     <i class="ri-search-line search-icon"></i>
                                 </div>
                             </div>
@@ -52,11 +59,17 @@
 
                             <!--end col-->
                             <div class="col-xxl-1 col-sm-4">
-                                <div>
-                                    <button type="button" class="btn btn-primary w-100" onclick="SearchData();"><i
-                                            class="ri-equalizer-fill me-1 align-bottom"></i>
-                                        Filters
+                                <div class="hstack gap-2 ">
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <i class="ri-search-line"></i>
                                     </button>
+                                    @if(count(request()->all()) > 0)
+                                        <button type="button" onclick="location.href = '{{route('admin.user.index')}}'"
+                                                class="btn btn-danger w-100"><i
+                                                class="ri-delete-bin-5-line"></i>
+
+                                        </button>
+                                    @endif
                                 </div>
                             </div>
                             <!--end col-->
@@ -77,6 +90,7 @@
                         </ul>
 
                         <div class="table-responsive table-card mb-1">
+                            @if($users->count() > 0)
                             <table class="table table-nowrap align-middle" id="orderTable">
                                 <thead class="text-muted table-light">
                                 <tr class="text-uppercase">
@@ -88,10 +102,10 @@
                                 </tr>
                                 </thead>
                                 <tbody class="list form-check-all">
-                                @forelse($users as $user)
+                                @foreach($users as $user)
                                     <tr>
-                                        <td class="customer_name">{{ $user?->name ?? '-' }}</td>
-                                        <td class="phone">{{ $user?->username ?? '-' }}</td>
+                                        <td class="customer_name">{{ $user?->company?->name ?? '-' }}</td>
+                                        <td class="phone">{{ $user?->full_name ?? '-' }}</td>
                                         <td class="email">
                                             {{ $user?->email ?? '-' }}
                                         </td>
@@ -125,11 +139,12 @@
                                             </ul>
                                         </td>
                                     </tr>
-                                @empty
-                                    <x-no-found/>
-                                @endforelse
+                                @endforeach
                                 </tbody>
                             </table>
+                            @else
+                                <x-no-found/>
+                                @endif
                         </div>
                         <div class="d-flex justify-content-end">
                             <div class="pagination-wrap hstack gap-2">

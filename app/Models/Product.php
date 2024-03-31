@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enum\Product\ProductStatusEnum;
 use App\Enum\Product\ProductUnitEnum;
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,7 +16,7 @@ use Spatie\Sluggable\SlugOptions;
 
 class Product extends Model
 {
-    use HasFactory, HasSlug, HasHashid, HashidRouting;
+    use HasFactory, HasSlug, HasHashid, HashidRouting, Filterable;
 
     protected $fillable = [
         'brand_id',
@@ -82,5 +83,15 @@ class Product extends Model
     public function productMedias(): HasMany
     {
         return $this->hasMany(ProductMedia::class);
+    }
+
+    public function scopeWhereLike($query, $column, $value)
+    {
+        return $query->where($column, 'like', '%'.$value.'%');
+    }
+
+    public function scopeOrWhereLike($query, $column, $value)
+    {
+        return $query->orWhere($column, 'like', '%'.$value.'%');
     }
 }

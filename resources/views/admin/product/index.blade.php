@@ -39,11 +39,11 @@
                     </div>
                 </div>
                 <div class="card-body border border-dashed border-end-0 border-start-0">
-                    <form>
+                    <form id="searchForm">
                         <div class="row g-3">
                             <div class="col-xxl-5 col-sm-6">
                                 <div class="search-box">
-                                    <input type="text" class="form-control search" placeholder="Ürün Adı Giriniz">
+                                    <input type="text" class="form-control search" name="name" value="{{ request()->get('name')  }}" placeholder="Ürün Adı Giriniz">
                                     <i class="ri-search-line search-icon"></i>
                                 </div>
                             </div>
@@ -52,11 +52,17 @@
 
                             <!--end col-->
                             <div class="col-xxl-1 col-sm-4">
-                                <div>
-                                    <button type="button" class="btn btn-primary w-100" onclick="SearchData();"><i
-                                            class="ri-equalizer-fill me-1 align-bottom"></i>
-                                        Filters
+                                <div class="hstack gap-2 ">
+                                    <button type="submit" class="btn btn-primary w-100" ><i
+                                            class="ri-search-line"></i>
+
                                     </button>
+                                    @if(count(request()->all()) > 0)
+                                    <button type="button" onclick="location.href = '{{route('admin.product.index')}}'" class="btn btn-danger w-100" ><i
+                                            class="ri-delete-bin-5-line"></i>
+
+                                    </button>
+                                    @endif
                                 </div>
                             </div>
                             <!--end col-->
@@ -77,6 +83,7 @@
                         </ul>
 
                         <div class="table-responsive table-card mb-1">
+                            @if($products->count())
                             <table class="table table-nowrap align-middle" id="orderTable">
                                 <thead class="text-muted table-light">
                                 <tr class="text-uppercase">
@@ -90,7 +97,7 @@
                                 </tr>
                                 </thead>
                                 <tbody class="list form-check-all">
-                                @forelse($products as $product)
+                                @foreach($products as $product)
                                     <tr>
                                         <td class="code">{{ $product?->code ?? '-' }}</td>
                                         <td class="name">{{ $product?->name ?? '-' }}</td>
@@ -132,11 +139,12 @@
                                             </ul>
                                         </td>
                                     </tr>
-                                @empty
-                                    <x-no-found/>
-                                @endforelse
+                                    @endforeach
                                 </tbody>
                             </table>
+                            @else
+                                <x-no-found/>
+                            @endif
                         </div>
                         <div class="d-flex justify-content-end">
                             <div class="pagination-wrap hstack gap-2">

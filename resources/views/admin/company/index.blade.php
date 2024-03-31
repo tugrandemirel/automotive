@@ -45,7 +45,7 @@
                         <div class="row g-3">
                             <div class="col-xxl-5 col-sm-6">
                                 <div class="search-box">
-                                    <input type="text" class="form-control search" placeholder="Firma Adı Giriniz">
+                                    <input type="text" class="form-control search" name="name" value="{{ request()->get('name') }}" placeholder="Firma Adı Giriniz">
                                     <i class="ri-search-line search-icon"></i>
                                 </div>
                             </div>
@@ -54,11 +54,17 @@
 
                             <!--end col-->
                             <div class="col-xxl-1 col-sm-4">
-                                <div>
-                                    <button type="button" class="btn btn-primary w-100" onclick="SearchData();"><i
-                                            class="ri-equalizer-fill me-1 align-bottom"></i>
-                                        Filters
+                                <div class="hstack gap-2 ">
+                                    <button type="submit" class="btn btn-primary w-100" ><i
+                                            class="ri-search-line"></i>
+
                                     </button>
+                                    @if(count(request()->all()) > 0)
+                                        <button type="button" onclick="location.href = '{{route('admin.company.index')}}'" class="btn btn-danger w-100" ><i
+                                                class="ri-delete-bin-5-line"></i>
+
+                                        </button>
+                                    @endif
                                 </div>
                             </div>
                             <!--end col-->
@@ -79,74 +85,78 @@
                         </ul>
 
                         <div class="table-responsive table-card mb-1">
-                            <table class="table table-nowrap align-middle" id="orderTable">
-                                <thead class="text-muted table-light">
-                                <tr class="text-uppercase">
-                                    <th class="sort" data-sort="customer_name">Ad/Ünvan</th>
-                                    <th class="sort" data-sort="phone">Telefon</th>
-                                    <th class="sort" data-sort="city">İl</th>
-                                    <th class="sort" data-sort="district">İlçe</th>
-                                    <th class="sort" data-sort="payment">Ödeme Şekli</th>
-                                    <th class="sort" data-sort="general_discount">Genel İskonto</th>
-                                    <th class="sort" data-sort="one_shot_discount">Tek Çekim İskonto</th>
-                                    <th class="sort" data-sort="advance_discount">Peşin İskonto</th>
-                                    <th class="sort" data-sort="action">İşlemler</th>
-                                </tr>
-                                </thead>
-                                <tbody class="list form-check-all">
-                                @forelse($companies as $company)
-                                    <tr>
-                                        <td class="customer_name">{{ $company?->name ?? '-' }}</td>
-                                        <td class="phone">{{ $company?->phone ?? '-' }}</td>
-                                        <td class="city">
-                                            {{ $company?->city ?? '-' }}
-                                        </td>
-                                        <td class="district">{{ $company?->district }}</td>
-                                        <td class="payment">
-                                            @if($company?->credit_can_pay === CompanyCreditCanPayEnum::TRUE)
-                                                <span class="badge bg-success-subtle text-success" data-toggle="tooltip"
-                                                      title="Kredi Kartı ile ödeyebilir">KK Ödeyebilir</span>
-                                            @endif
-                                            @if($company?->current_can_pay === CompanyCurrentCanPayEnum::TRUE)
-                                                <span class="badge bg-success-subtle text-success" data-toggle="tooltip"
-                                                      title="Cari ödeyebilir">Cari Ödeyebilir</span>
-                                            @endif
-                                        </td>
-                                        <td class="general_discount">{{ $company?->general_discount ?? '-' }}</td>
-                                        <td class="one_shot_discount">{{ $company?->one_shot_discount ?? '-' }}</td>
-                                        <td class="credit_discount">{{ $company?->advance_discount ?? '-' }}</td>
-                                        <td>
-                                            <ul class="list-inline hstack gap-2 mb-0">
-                                               {{-- <li class="list-inline-item" data-bs-toggle="tooltip"
-                                                    data-bs-trigger="hover" data-bs-placement="top" title="View">
-                                                    <a href="apps-ecommerce-order-details.html"
-                                                       class="text-primary d-inline-block">
-                                                        <i class="ri-eye-fill fs-16"></i>
-                                                    </a>
-                                                </li>--}}
-                                                <li class="list-inline-item edit" data-bs-toggle="tooltip"
-                                                    data-bs-trigger="hover" data-bs-placement="top" title="Düzenle">
-                                                    <a href="{{ route('admin.company.edit', ['company' => $company->hashid()]) }}"
-                                                       class="text-primary d-inline-block edit-item-btn">
-                                                        <i class="ri-pencil-fill fs-16"></i>
-                                                    </a>
-                                                </li>
-                                                <li class="list-inline-item" data-bs-toggle="tooltip"
-                                                    data-bs-trigger="hover" data-bs-placement="top" title="Sil">
-                                                    <a onclick="deleteItem('{{ route('admin.company.destroy', ['company' => $company->hashid()]) }}')" class="text-danger d-inline-block remove-item-btn"
-                                                      >
-                                                        <i class="ri-delete-bin-5-fill fs-16"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </td>
+                            @if($companies->count() > 0)
+                                <table class="table table-nowrap align-middle" id="orderTable">
+                                    <thead class="text-muted table-light">
+                                    <tr class="text-uppercase">
+                                        <th class="sort" data-sort="customer_name">Ad/Ünvan</th>
+                                        <th class="sort" data-sort="phone">Telefon</th>
+                                        <th class="sort" data-sort="city">İl</th>
+                                        <th class="sort" data-sort="district">İlçe</th>
+                                        <th class="sort" data-sort="payment">Ödeme Şekli</th>
+                                        <th class="sort" data-sort="general_discount">Genel İskonto</th>
+                                        <th class="sort" data-sort="one_shot_discount">Tek Çekim İskonto</th>
+                                        <th class="sort" data-sort="advance_discount">Peşin İskonto</th>
+                                        <th class="sort" data-sort="action">İşlemler</th>
                                     </tr>
-                                @empty
-                                    <x-no-found/>
-                                @endforelse
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody class="list form-check-all">
+                                    @foreach($companies as $company)
+                                        <tr>
+                                            <td class="customer_name">{{ $company?->name ?? '-' }}</td>
+                                            <td class="phone">{{ $company?->phone ?? '-' }}</td>
+                                            <td class="city">
+                                                {{ $company?->city ?? '-' }}
+                                            </td>
+                                            <td class="district">{{ $company?->district }}</td>
+                                            <td class="payment">
+                                                @if($company?->credit_can_pay === CompanyCreditCanPayEnum::TRUE)
+                                                    <span class="badge bg-success-subtle text-success" data-toggle="tooltip"
+                                                          title="Kredi Kartı ile ödeyebilir">KK Ödeyebilir</span>
+                                                @endif
+                                                @if($company?->current_can_pay === CompanyCurrentCanPayEnum::TRUE)
+                                                    <span class="badge bg-success-subtle text-success" data-toggle="tooltip"
+                                                          title="Cari ödeyebilir">Cari Ödeyebilir</span>
+                                                @endif
+                                            </td>
+                                            <td class="general_discount">{{ $company?->general_discount ?? '-' }}</td>
+                                            <td class="one_shot_discount">{{ $company?->one_shot_discount ?? '-' }}</td>
+                                            <td class="credit_discount">{{ $company?->advance_discount ?? '-' }}</td>
+                                            <td>
+                                                <ul class="list-inline hstack gap-2 mb-0">
+                                                   {{-- <li class="list-inline-item" data-bs-toggle="tooltip"
+                                                        data-bs-trigger="hover" data-bs-placement="top" title="View">
+                                                        <a href="apps-ecommerce-order-details.html"
+                                                           class="text-primary d-inline-block">
+                                                            <i class="ri-eye-fill fs-16"></i>
+                                                        </a>
+                                                    </li>--}}
+                                                    <li class="list-inline-item edit" data-bs-toggle="tooltip"
+                                                        data-bs-trigger="hover" data-bs-placement="top" title="Düzenle">
+                                                        <a href="{{ route('admin.company.edit', ['company' => $company->hashid()]) }}"
+                                                           class="text-primary d-inline-block edit-item-btn">
+                                                            <i class="ri-pencil-fill fs-16"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li class="list-inline-item" data-bs-toggle="tooltip"
+                                                        data-bs-trigger="hover" data-bs-placement="top" title="Sil">
+                                                        <a onclick="deleteItem('{{ route('admin.company.destroy', ['company' => $company->hashid()]) }}')" class="text-danger d-inline-block remove-item-btn"
+                                                          >
+                                                            <i class="ri-delete-bin-5-fill fs-16"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            @else
+                                <x-no-found/>
+                            @endif
                         </div>
+
                         <div class="d-flex justify-content-end">
                             <div class="pagination-wrap hstack gap-2">
                                 {{ $companies->links() }}

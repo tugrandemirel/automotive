@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Product;
 
 use App\Enum\Brand\BrandIsActiveEnum;
+use App\Filters\Admin\Product\ProductFilter;
 use App\Helpers\ImageHelpers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Product\ProductStoreRequest;
@@ -29,10 +30,11 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
+    public function index(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         $products = Product::query()
             ->with(['brand'])
+            ->filter($request->all(), ProductFilter::class)
             ->paginate(20);
         return view('admin.product.index', compact('products'));
     }

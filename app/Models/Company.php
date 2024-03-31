@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enum\Company\CompanyCreditCanPayEnum;
 use App\Enum\Company\CompanyCurrentCanPayEnum;
 use App\Enum\Company\CompanyCurrentEnum;
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -17,6 +18,7 @@ class Company extends Model
     use HasFactory;
     use HasHashid;
     use HashidRouting;
+    use Filterable;
 
     protected $fillable = [
         'name',
@@ -64,5 +66,16 @@ class Company extends Model
     public function user(): HasOne
     {
         return $this->hasOne(User::class);
+    }
+
+
+    public function scopeWhereLike($query, $column, $value)
+    {
+        return $query->where($column, 'like', '%'.$value.'%');
+    }
+
+    public function scopeOrWhereLike($query, $column, $value)
+    {
+        return $query->orWhere($column, 'like', '%'.$value.'%');
     }
 }

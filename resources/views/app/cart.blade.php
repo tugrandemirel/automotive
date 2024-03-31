@@ -60,7 +60,9 @@
                                                 {{ $cart?->price ??'-' }}
                                             </td>
                                             <td>
-                                                <div class="pro-qty"><input type="text" class="quantity" title="Adet" min="0" value="{{ $cart?->quantity ?? 0 }}"></div>
+                                                <div class="pro-qty">
+                                                    <input type="text" data-id="{{ $cart->hashid() }}" class="quantity" title="Adet" min="0" value="{{ $cart?->quantity ?? 0 }}">
+                                                </div>
                                             </td>
                                             <td>
                                                 {{ $cart?->general_discount ??'-' }}

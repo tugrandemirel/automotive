@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Company;
 
+use App\Filters\Admin\Company\CompanyFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Company\CompanyStoreRequest;
 use App\Http\Requests\Admin\Company\CompanyUpdateRequest;
@@ -24,6 +25,7 @@ class CompanyController extends Controller
     public function index(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         $companies = Company::query()
+            ->filter($request->all(), CompanyFilter::class)
             ->paginate(20);
         return view('admin.company.index', compact('companies'));
     }

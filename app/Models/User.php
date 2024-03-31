@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enum\User\UserRoleEnum;
 use App\Enum\User\UserStatusEnum;
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,8 +18,7 @@ use Mtvs\EloquentHashids\HashidRouting;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
-    use HasHashid, HashidRouting;
+    use HasApiTokens, HasFactory, Notifiable, HasHashid, HashidRouting, Filterable;
 
     /**
      * The attributes that are mass assignable.
@@ -74,5 +74,15 @@ class User extends Authenticatable
     public function carts(): HasMany
     {
         return $this->hasMany(Cart::class);
+    }
+
+    public function scopeWhereLike($query, $column, $value)
+    {
+        return $query->where($column, 'like', '%'.$value.'%');
+    }
+
+    public function scopeOrWhereLike($query, $column, $value)
+    {
+        return $query->orWhere($column, 'like', '%'.$value.'%');
     }
 }
