@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\User;
 use App\Traits\ResponderTrait;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
@@ -20,15 +21,16 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
-    }
+        /** @var User $user */
+        $user = auth()->user();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $orders = Order::query()
+            ->whereRelation('user', 'user_id', '=', $user->id)
+            ->with(['user', 'company'])
+            ->orderByDesc('id')
+            ->paginate(20);
+
+        return view('app.order', compact('orders'));
     }
 
     /**
@@ -37,15 +39,19 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        /** @var User $user */
         $user = auth()->user();
         $user->load('company');
 
+        /** @var Cart $carts */
         $carts = Cart::query()
             ->whereRelation('user', 'user_id', '=', $user->id)
             ->with(['product'])
             ->get();
 
         $code = $user?->company?->code.'-'.Carbon::now();
+
+        /** @var Order $order */
         throw_unless( $order = Order::query()
             ->create([
                 'user_id' => $user->id,
@@ -70,6 +76,7 @@ class OrderController extends Controller
                 'vat' => (float)$cart?->vat,
             ]);
 
+            /** @var OrderDetail */
             throw_unless(OrderDetail::query()->create($attributes->toArray()), QueryException::class, 'Sipariş oluşturulurken bir hata ile karşılaşıldı.');
 
             throw_unless($cart->delete(), QueryException::class, 'Sepet boşaltma sırasında bir hata ile karşılaşıldı');
@@ -85,30 +92,18 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        //
+        /** @var Order $order */
+        $order = Order::query()
+            ->with('company')
+            ->findByHashidOrFail($id);
+
+        /** @var OrderDetail $orderDetails */
+        $orderDetails = OrderDetail::query()
+            ->whereRelation('order', 'order_id', '=', $order?->id)
+            ->with( 'product', 'currency', 'product.brand')
+            ->get();
+
+        return view('app.order-detail', compact('order', 'orderDetails'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

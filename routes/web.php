@@ -34,8 +34,7 @@ Route::middleware(['auth'])->group(function (){
 
     Route::resource('siparislerim', OrderController::class)
         ->parameter('siparislerim', 'order')
-        ->names('order')
-        ->except('show');
+        ->names('order');
 
 });
 

@@ -161,15 +161,13 @@
                     url: '{{ route('cart.store') }}',
                     data: {_token: '{{ csrf_token() }}', quantity : quantity, product_id: productId},
                     success: function (response) {
-                        console.log(response)
-
                         Swal.fire({
                             title: "Başarılı!",
-                            text: response.responseJson.message,
+                            text: response.message,
                             icon: "success",
                             confirmButtonText: "Tamam!",
-                        }).then((result) => function () {
-                            location.reload()
+                        }).then((result) => {
+                                location.reload()
                         })
                     },
                     error: function (error) {
@@ -178,6 +176,9 @@
                             text: error.message,
                             icon: "error",
                             confirmButtonText: "Tamam!",
+                        }).then((result) => {
+                            location.reload()
+
                         })
                     }
                 })

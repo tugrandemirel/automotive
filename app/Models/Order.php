@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Enum\Company\CompanyCurrentEnum;
 use App\Enum\Order\OrderStatusEnum;
+use App\Enum\Product\ProductUnitEnum;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,8 +26,30 @@ class Order extends Model
     ];
 
     protected $casts = [
-        'status' => OrderStatusEnum::class
+        'status' => OrderStatusEnum::class,
+        'payment_method' => CompanyCurrentEnum::class
     ];
+
+    public function getPaymentMethodFormattedAttribute(): string
+    {
+        $values = [
+            CompanyCurrentEnum::CURRENT->value => 'Cari',
+            CompanyCurrentEnum::NOT_CURRENT->value => 'Cari Değil',
+        ];
+        return $values[$this->payment_method->value];
+    }
+
+    public function getStatusFormattedAttribute(): string
+    {
+        $values = [
+           OrderStatusEnum::PENDING->value => 'Sipariş Alındı',
+           OrderStatusEnum::PROCESSING->value => 'Sipariş Hazırlanıyor',
+           OrderStatusEnum::SHIPPED->value => 'Sipariş Hazırlandı. Yola Çıktı',
+           OrderStatusEnum::COMPLETED->value => 'Sipariş Tamamlandı',
+           OrderStatusEnum::CANCELLED->value => 'Sipariş İptal Edildi',
+        ];
+        return $values[$this->status->value];
+    }
 
     public function user(): BelongsTo
     {

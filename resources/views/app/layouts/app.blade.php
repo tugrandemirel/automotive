@@ -19,8 +19,6 @@
     <link href="{{ asset('assets/front/css/style.css') }}" rel="stylesheet"><!-- Modernizer JS -->
 
     <script src="{{ asset('assets/front/js/modernizr-2.8.3.min.js') }}"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
 </head>
 
 <body class="preloader-active">
@@ -57,7 +55,7 @@
                                 <li class="dropdown-navbar arrow"><a href="#">FİRMA BİLGİLERİM</a>
 
                                 </li>
-                                <li class="dropdown-navbar arrow"><a href="shop.html">SİPARİŞ GEÇMİŞİ</a>
+                                <li class="dropdown-navbar arrow"><a href="{{ route('order.index') }}">SİPARİŞ GEÇMİŞİ</a>
 
                                 </li>
                                 <li class="dropdown-navbar arrow"><a href="shop.html">KAMPANYALAR</a>
@@ -261,6 +259,8 @@
 <!--=======================Javascript============================-->
 <!--=== All Vendor Js ===-->
 @include('sweetalert::alert')
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
 <script src="{{ asset('assets/front/js/vendor.js') }}"></script>
 <!--=== All Plugins Js ===-->
 <script src="{{ asset('assets/front/js/plugins.js') }}"></script>
