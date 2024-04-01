@@ -39,6 +39,15 @@ class Order extends Model
         return $values[$this->payment_method->value];
     }
 
+    public function getPaymentMethodColorFormattedAttribute(): string
+    {
+        $values = [
+            CompanyCurrentEnum::CURRENT->value => 'success',
+            CompanyCurrentEnum::NOT_CURRENT->value => 'danger',
+        ];
+        return $values[$this->payment_method->value];
+    }
+
     public function getStatusFormattedAttribute(): string
     {
         $values = [

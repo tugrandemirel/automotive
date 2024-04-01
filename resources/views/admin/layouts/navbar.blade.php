@@ -29,6 +29,12 @@
                 </a>
             </li> <!-- end Dashboard Menu -->
 
+            <li class="nav-item">
+                <a class="nav-link " href="{{ route('admin.order.index') }}" >
+                    <i class="mdi mdi-speedometer"></i> <span data-key="t-dashboards">Siparişler</span>
+                </a>
+            </li> <!-- end Dashboard Menu -->
+
         </ul>
     </div>
     <!-- Sidebar -->

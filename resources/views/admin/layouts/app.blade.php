@@ -135,6 +135,18 @@
 <!-- App js -->
 <script src="{{ asset('assets/admin/js/app.js') }}"></script>
 @stack('js')
+<script>
+    function clearQueryAndReload() {
+        // Mevcut URL'yi al
+        var currentUrl = window.location.href;
+
+        // Query string'i temizle
+        var cleanUrl = currentUrl.split('?')[0];
+
+        // Yeni URL'yi kullanarak sayfayı yenile
+        window.location.href = cleanUrl;
+    }
+</script>
 </body>
 
 </html>

@@ -52,6 +52,16 @@ Route::prefix('admin')->as('admin.')->middleware(['auth', 'verified', 'isRole'])
         ->names('user')
         ->except('show');
 
+    Route::prefix('siparislerim')->as('order.')->group(function (){
+        Route::get('/', [\App\Http\Controllers\Admin\Order\OrderController::class, 'index'])->name('index');
+        Route::get('/detay/{order}', [\App\Http\Controllers\Admin\Order\OrderController::class, 'show'])->name('show');
+        Route::get('/bekleyenler', [\App\Http\Controllers\Admin\Order\OrderController::class, 'getPending'])->name('pending');
+        Route::get('/hazirlananlar', [\App\Http\Controllers\Admin\Order\OrderController::class, 'getProcessing'])->name('processing');
+        Route::get('/yola-cikanlar', [\App\Http\Controllers\Admin\Order\OrderController::class, 'getShipped'])->name('shipped');
+        Route::get('/teslim-edilenler', [\App\Http\Controllers\Admin\Order\OrderController::class, 'getCompleted'])->name('completed');
+        Route::get('/iptal-edilenler', [\App\Http\Controllers\Admin\Order\OrderController::class, 'getCancelled'])->name('cancelled');
+    });
+
     Route::delete('single-delete-image/{media}', [ProductController::class, 'singleImageDelete'])->name('product.single_image_destroy');
     Route::resource('urunler', ProductController::class)
         ->parameter('urunler', 'product')
