@@ -14,13 +14,22 @@ class OrderFilter extends ModelFilter
     */
     public $relations = [];
 
-    public function name($value)
+    public function code($value)
     {
         if (is_null(trim($value))) {
             return $this;
         }
 
-        return $this->with('user')->whereLike('name', trim($value));
+        return $this->whereLike('code', trim($value));
+    }
+
+    public function status($value)
+    {
+        if (is_null(trim($value))) {
+            return $this;
+        }
+
+        return $this->where('status', $value);
     }
 
 }
