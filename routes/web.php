@@ -60,6 +60,7 @@ Route::prefix('admin')->as('admin.')->middleware(['auth', 'verified', 'isRole'])
         Route::get('/yola-cikanlar', [\App\Http\Controllers\Admin\Order\OrderController::class, 'getShipped'])->name('shipped');
         Route::get('/teslim-edilenler', [\App\Http\Controllers\Admin\Order\OrderController::class, 'getCompleted'])->name('completed');
         Route::get('/iptal-edilenler', [\App\Http\Controllers\Admin\Order\OrderController::class, 'getCancelled'])->name('cancelled');
+        Route::post('/changeStatus/{order}', [\App\Http\Controllers\Admin\Order\OrderController::class, 'setStatus'])->name('status');
     });
 
     Route::delete('single-delete-image/{media}', [ProductController::class, 'singleImageDelete'])->name('product.single_image_destroy');

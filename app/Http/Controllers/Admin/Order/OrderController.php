@@ -5,15 +5,20 @@ namespace App\Http\Controllers\Admin\Order;
 use App\Enum\Order\OrderStatusEnum;
 use App\Filters\Admin\Order\OrderFilter;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Order\OrderChangeStatusRequest;
 use App\Models\Order;
+use App\Traits\ResponderTrait;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class OrderController extends Controller
 {
+    use ResponderTrait;
+
     /**
      * @param Request $request
      * @return View|Application|Factory|\Illuminate\Contracts\Foundation\Application
@@ -121,7 +126,11 @@ class OrderController extends Controller
         return view('admin.order.completed', compact('orders'));
     }
 
-    public function show(string $id)
+    /**
+     * @param string $id
+     * @return View|Application|Factory|\Illuminate\Contracts\Foundation\Application
+     */
+    public function show(string $id): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         /** @var Order $order */
         $order = Order::query()
@@ -133,5 +142,21 @@ class OrderController extends Controller
         $orderDetails = $order->orderDetails;
 
         return view('admin.order.show', compact('user', 'company','orderDetails', 'order'));
+    }
+
+    public function setStatus(OrderChangeStatusRequest $request, string $id)
+    {
+
+        $attributes = collect($request->validated());
+
+        /** @var Order $order */
+        $order = Order::query()
+            ->with('orderDetails')
+            ->findByHashidOrFail($id);
+
+        throw_unless($order->update($attributes->toArray()), QueryException::class, 'Sipariş durumu değiştirme işlemi sırasında bir hata ile karılaşıldı.');
+        throw_unless($order->orderDetails()->update($attributes->toArray()), QueryException::class, 'Sipariş durumu değiştirme işlemi sırasında bir hata ile karılaşıldı.');
+
+        return $this->success(['message' => 'Başarılı bir şekilde durum güncellemesi gerçekleştirildi.']);
     }
 }

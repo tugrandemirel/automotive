@@ -175,34 +175,35 @@
                 reverseButtons: true
             }).then(result => {
                 if (result.isConfirmed) {
-                    $.ajax({
-                        type: 'DELETE',
-                        url: url,
-                        data: {_token: '{{ csrf_token() }}'},
-                        success: function (response) {
-                            Swal.fire({
-                                title: "Başarılı!",
-                                text: response.data.message,
-                                icon: "success",
-                                confirmButtonText: "Tamam!",
-                            }).then(result => {
-                                if (result.isConfirmed) {
-                                    location.reload()
-                                }
-                            })
-                        },
-                        error: function (error) {
-                            Swal.fire({
-                                title: "Hata!",
-                                text: error.message,
-                                icon: "error",
-                                confirmButtonText: "Tamam!",
-                            }).then(result => {
-                                if (result.isConfirmed) {
-                                    location.reload()
-                                }
-                            })
-                        }
+                        $.ajax({
+                            type: 'DELETE',
+                            url: url,
+                            data: {_token: '{{ csrf_token() }}'},
+                            success: function (response) {
+                                Swal.fire({
+                                    title: "Başarılı!",
+                                    text: response.data.message,
+                                    icon: "success",
+                                    confirmButtonText: "Tamam!",
+                                }).then(result => {
+                                    if (result.isConfirmed) {
+                                        location.reload()
+                                    }
+                                })
+                            },
+                            error: function (error) {
+                                Swal.fire({
+                                    title: "Hata!",
+                                    text: error.message,
+                                    icon: "error",
+                                    confirmButtonText: "Tamam!",
+                                }).then(result => {
+                                    if (result.isConfirmed) {
+                                        location.reload()
+                                    }
+                                })
+                            }
+
                     })
                 }
             })
