@@ -264,12 +264,13 @@
                     </div>
                     <div class="card-body">
                         <div class="mb-3">
+
                             <label for="choices-publish-status-input" class="form-label">Birim:</label>
                             <select class="form-control @error('unit') is-invalid @enderror" name="unit">
-                                <option value="{{ ProductUnitEnum::PIECE }}" @selected( $product?->unit === ProductUnitEnum::PIECE)>
+                                <option value="{{ ProductUnitEnum::PIECE }}" @selected($product?->unit == ProductUnitEnum::PIECE)>
                                     Adet
                                 </option>
-                                <option value="{{ ProductUnitEnum::SET }}" @selected( $product?->unit === ProductUnitEnum::SET)>
+                                <option value="{{ ProductUnitEnum::SET }}" @selected($product?->unit == ProductUnitEnum::SET)>
                                     Takım
                                 </option>
                             </select>

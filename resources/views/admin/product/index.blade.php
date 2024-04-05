@@ -109,10 +109,10 @@
                                         <td class="unit">
                                             @if($product?->unit ===  ProductUnitEnum::PIECE)
                                                 <span class="badge bg-info-subtle text-info" data-toggle="tooltip"
-                                                      title="Aktif">Takım</span>
+                                                      title="Aktif">Adet</span>
                                             @else
                                                 <span class="badge bg-info-subtle text-info" data-toggle="tooltip"
-                                                      title="Pasif">Adet</span>
+                                                      title="Pasif">Takım</span>
                                             @endif
                                         </td>
                                         <td class="sale_price">
