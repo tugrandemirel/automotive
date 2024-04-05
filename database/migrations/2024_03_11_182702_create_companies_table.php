@@ -25,7 +25,7 @@ return new class extends Migration
             $table->text('bank_information')->nullable();
             $table->text('description')->nullable();
             $table->string('file')->nullable();
-            $table->boolean('current')->default(CompanyCurrentEnum::NOT_CURRENT);
+            $table->boolean('current')->default(CompanyCurrentEnum::CURRENT->value);
             $table->boolean('current_can_pay')->comment('cari ödeyebilir')->default(CompanyCurrentCanPayEnum::FALSE);
             $table->boolean('credit_can_pay')->comment('kredi karti ile ödeyebilir')->default(CompanyCreditCanPayEnum::FALSE);
             $table->decimal('general_discount')->comment('genel iskonto')->default(0);

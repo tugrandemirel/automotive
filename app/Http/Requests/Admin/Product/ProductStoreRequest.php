@@ -33,7 +33,7 @@ class ProductStoreRequest extends FormRequest
             'purchase_price' => 'required|numeric',
             'sale_price' => 'required|numeric',
             'currency_id' => 'required|numeric|exists:currencies,id',
-            'description' => 'required|string|min:3|max:250',
+            'description' => 'nullable|string|min:3|max:250',
             'images' => 'nullable|array',
             'images.*' => 'nullable|mimes:jpg,jpeg,png',
             'meta_keywords' => 'nullable|string|min:3|max:150',

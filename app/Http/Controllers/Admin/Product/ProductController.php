@@ -8,6 +8,7 @@ use App\Helpers\ImageHelpers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Product\ProductStoreRequest;
 use App\Http\Requests\Admin\Product\ProductUpdateRequest;
+use App\Imports\Product\ProductExcel;
 use App\Models\Brand;
 use App\Models\Currency;
 use App\Models\Product;
@@ -22,6 +23,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -184,5 +186,13 @@ class ProductController extends Controller
         throw_unless($productMedia?->delete(), QueryException::class, 'Ürün resim silme işlemi gerçekleştirilemedi.');
 
         return $this->success(['message', 'Silme işlemi başarılı bir şekilde gerçekleştirildi.']);
+    }
+
+    public function import(Request $request): RedirectResponse
+    {
+        $file = $request->file('file');
+
+        Excel::import(new ProductExcel, $file);
+        return redirect()->back();
     }
 }

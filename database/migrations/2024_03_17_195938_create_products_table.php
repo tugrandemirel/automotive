@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('slug');
             $table->string('code');
             $table->text('description')->nullable();
-            $table->integer('status')->default(ProductStatusEnum::PASSIVE->value);
+            $table->integer('status')->default(ProductStatusEnum::ACTIVE->value);
             $table->integer('unit');
             $table->integer('quantity')->comment('stok adedi');
             $table->integer('critical_quantity')->comment('kritik stok adedi');

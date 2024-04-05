@@ -63,6 +63,7 @@ Route::prefix('admin')->as('admin.')->middleware(['auth', 'verified', 'isRole'])
         Route::post('/changeStatus/{order}', [\App\Http\Controllers\Admin\Order\OrderController::class, 'setStatus'])->name('status');
     });
 
+    Route::post('/excel/import', [ProductController::class, 'import'])->name('product.import');
     Route::delete('single-delete-image/{media}', [ProductController::class, 'singleImageDelete'])->name('product.single_image_destroy');
     Route::resource('urunler', ProductController::class)
         ->parameter('urunler', 'product')
