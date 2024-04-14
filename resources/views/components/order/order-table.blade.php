@@ -4,15 +4,15 @@
         <table class="table table-nowrap align-middle" id="orderTable">
             <thead class="text-muted table-light">
             <tr class="text-uppercase">
-                <th data-sort="id">Sipariş ID</th>
-                <th data-sort="code">Sipariş Kodu</th>
-                <th data-sort="customer_name">Ad/Ünvan</th>
-                <th data-sort="product_name">Sipariş Veren</th>
-                <th data-sort="date">Sipariş Tarihi</th>
-                <th data-sort="amount">Ürün Adet</th>
-                <th data-sort="payment">Ödeme Yöntemi</th>
-                <th data-sort="status">Sipariş Durumu</th>
-                <th data-sort="action">İşlemler</th>
+                <th data-sort="id">SİPARİŞ İD</th>
+                <th data-sort="code">SİPARİŞ KODU</th>
+                <th data-sort="customer_name">AD/ÜNVAN</th>
+                <th data-sort="product_name">SİPARİŞ VEREN</th>
+                <th data-sort="date">SİPARİŞ TARİHİ</th>
+                <th data-sort="amount">ÜRÜN ADEDİ</th>
+                <th data-sort="payment">ÖDEME YÖNTEMİ</th>
+                <th data-sort="status">SİPARİŞ DURUMU</th>
+                <th data-sort="action">İŞLEMLER</th>
             </tr>
             </thead>
             <tbody class="list form-check-all">

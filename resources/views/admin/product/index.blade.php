@@ -89,13 +89,14 @@
                             <table class="table table-nowrap align-middle" id="orderTable">
                                 <thead class="text-muted table-light">
                                 <tr class="text-uppercase">
-                                    <th class="sort" data-sort="code">Ürün/Referans Kodu</th>
-                                    <th class="sort" data-sort="name">Ürün Adı</th>
-                                    <th class="sort" data-sort="brand">Marka</th>
-                                    <th class="sort" data-sort="unit">Birim</th>
-                                    <th class="sort" data-sort="sale_price">Satış Fiyatı</th>
-                                    <th class="sort" data-sort="quantity">Stok Adedi</th>
-                                    <th class="sort" data-sort="action">İşlemler</th>
+                                    <th class="sort" data-sort="code">ÜRÜN/REFERANS KODU</th>
+                                    <th class="sort" data-sort="name">ÜRÜN Adı</th>
+                                    <th class="sort" data-sort="brand">MARKA</th>
+                                    <th class="sort" data-sort="unit">BİRİM</th>
+                                    <th class="sort" data-sort="purchase_price">ALIŞ FİYATI</th>
+                                    <th class="sort" data-sort="sale_price">SATIŞ FİYATI</th>
+                                    <th class="sort" data-sort="quantity">STOK ADEDİ</th>
+                                    <th class="sort" data-sort="action">İŞLEMLER</th>
                                 </tr>
                                 </thead>
                                 <tbody class="list form-check-all">
@@ -114,6 +115,9 @@
                                                 <span class="badge bg-info-subtle text-info" data-toggle="tooltip"
                                                       title="Pasif">Takım</span>
                                             @endif
+                                        </td>
+                                        <td class="purchase_price">
+                                            {{ $product?->purchase_price ?? '-' }}
                                         </td>
                                         <td class="sale_price">
                                             {{ $product?->sale_price ?? '-' }}

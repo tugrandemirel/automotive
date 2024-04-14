@@ -160,7 +160,6 @@
                                                 </ul>
                                             </td>
                                         </tr>
-
                                     @endforeach
                                     </tbody>
                                 </table>
@@ -168,7 +167,6 @@
                                 <x-no-found/>
                             @endif
                         </div>
-
                         <div class="d-flex justify-content-end">
                             <div class="pagination-wrap hstack gap-2">
                                 {{ $companies->links() }}
@@ -177,11 +175,9 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <!--end col-->
     </div>
-
 @endsection
 @push('js')
     <script>
