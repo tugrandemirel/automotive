@@ -58,9 +58,8 @@
                                 <li class="dropdown-navbar arrow"><a href="{{ route('order.index') }}">SİPARİŞ GEÇMİŞİ</a>
 
                                 </li>
-                                <li class="dropdown-navbar arrow"><a href="shop.html">KAMPANYALAR</a>
-
-                                </li>
+                               {{-- <li class="dropdown-navbar arrow"><a href="shop.html">KAMPANYALAR</a>
+                                </li>--}}
                                 <li class="dropdown-navbar arrow"><a href="" onclick="event.preventDefault();
                                                  document.getElementById('logoutForm').submit();">ÇIKIŞ</a>
                                 </li>

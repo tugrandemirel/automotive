@@ -7,10 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\Product;
 use App\Models\User;
 use App\Traits\ResponderTrait;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -37,7 +39,7 @@ class OrderController extends Controller
      * Store a newly created resource in storage.
      * @throws \Throwable
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         /** @var User $user */
         $user = auth()->user();
@@ -49,7 +51,7 @@ class OrderController extends Controller
             ->with(['product'])
             ->get();
 
-        $code = $user?->company?->code.'-'.Carbon::now();
+        $code = $user?->company?->code.'-'.Carbon::now()->format('Y-d');
 
         /** @var Order $order */
         throw_unless( $order = Order::query()
@@ -78,6 +80,14 @@ class OrderController extends Controller
 
             /** @var OrderDetail */
             throw_unless(OrderDetail::query()->create($attributes->toArray()), QueryException::class, 'Sipariş oluşturulurken bir hata ile karşılaşıldı.');
+
+            $product = Product::query()
+                ->where('id', $cart?->product_id)
+                ->first();
+
+            $quantity = (int)$product?->quantity - (int)$cart?->quantity;
+
+            throw_unless($product?->update(['quantity' => $quantity]), QueryException::class, 'Ürün stok düşürümü sırasında bir hata ile karşılaşıldı.');
 
             throw_unless($cart->delete(), QueryException::class, 'Sepet boşaltma sırasında bir hata ile karşılaşıldı');
         }

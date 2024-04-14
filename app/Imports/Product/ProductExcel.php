@@ -40,12 +40,12 @@ class ProductExcel implements ToCollection, WithStartRow
             $unit = $row[2] == 'Adet' ? ProductUnitEnum::PIECE : ProductUnitEnum::SET;
 
             $product = Product::query()
-                ->where('code', 'like', '%' . $row[1] . '%')
+                ->where('code', 'like', '%' . (string)$row[1] . '%')
                 ->first();
 
             if ($product) {
                 $product->update([
-                    'name' => $row[0],
+                    'name' => (string)$row[0],
                     'unit' => $unit,
                     'quantity' => $row[3],
                     'critical_quantity' => $row[4],

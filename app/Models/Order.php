@@ -74,4 +74,15 @@ class Order extends Model
     {
         return $this->hasMany(OrderDetail::class);
     }
+
+
+    public function scopeWhereLike($query, $column, $value)
+    {
+        return $query->where($column, 'like', '%'.$value.'%');
+    }
+
+    public function scopeOrWhereLike($query, $column, $value)
+    {
+        return $query->orWhere($column, 'like', '%'.$value.'%');
+    }
 }

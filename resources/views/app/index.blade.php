@@ -76,8 +76,12 @@
                         <div class="single-input-item">
                             <label for="com-name">Detaylı arama</label>
                             <form action="#">
-                                <div class="src-from-content d-flex"><input name="product" type="search" placeholder="REF kodu, ürün adı girerek arama yapabilirsiniz">
-                                    <button class="btn-search" type="submit"><i class="fa fa-search"></i></button></div>
+                                <div class="src-from-content d-flex"><input name="product" value="{{ request()->get('product') }}" type="search" placeholder="REF kodu, ürün adı girerek arama yapabilirsiniz">
+                                    <button class="btn-search" type="submit"><i class="fa fa-search"></i></button>
+                                    @if(request()->all())
+                                    <button style="background-color: red" class="btn-search" type="button" onclick="location.href = '{{ route('home') }}'"><i class="fa fa-remove"></i></button>
+                                    @endif
+                                </div>
                             </form>
                         </div>
                         <table class="table table-bordered text-center">
