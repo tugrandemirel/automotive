@@ -43,9 +43,21 @@
                 <div class="card-body border border-dashed border-end-0 border-start-0">
                     <form>
                         <div class="row g-3">
-                            <div class="col-xxl-5 col-sm-6">
+                            <div class="col-md-3 col-sm-3">
                                 <div class="search-box">
                                     <input type="text" class="form-control search" name="name" value="{{ request()->get('name') }}" placeholder="Firma Adı Giriniz">
+                                    <i class="ri-search-line search-icon"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                                <div class="search-box">
+                                    <input type="text" class="form-control search" name="city" value="{{ request()->get('city') }}" placeholder="İl Adı Giriniz">
+                                    <i class="ri-search-line search-icon"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                                <div class="search-box">
+                                    <input type="text" class="form-control search" name="district" value="{{ request()->get('district') }}" placeholder="İlçe Adı Giriniz">
                                     <i class="ri-search-line search-icon"></i>
                                 </div>
                             </div>

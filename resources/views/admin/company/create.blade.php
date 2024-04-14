@@ -2,11 +2,11 @@
     use App\Enum\Company\CompanyCreditCanPayEnum;
      use App\Enum\Company\CompanyCurrentCanPayEnum;
      use App\Enum\Company\CompanyCurrentEnum;
- @endphp
+@endphp
 @extends('admin.layouts.app')
 @push('css')
     <!-- Plugins css -->
-    <link href="{{ asset('assets/admin/libs/dropzone/dropzone.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/admin/libs/dropzone/dropzone.css') }}" rel="stylesheet" type="text/css"/>
 @endpush
 @section('content')
 
@@ -28,7 +28,8 @@
         </div>
     </div>
 
-    <form id="" autocomplete="off" action="{{ route('admin.company.store') }}" method="post" enctype="multipart/form-data">
+    <form id="" autocomplete="off" action="{{ route('admin.company.store') }}" method="post"
+          enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="col-lg-8">
@@ -54,6 +55,7 @@
                                         <div class="mb-3">
                                             <label class="form-label" for="manufacturer-name-input">Ad/Ünvan:</label>
                                             <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                                   value="{{ old('name') }}"
                                                    name="name">
                                         </div>
                                     </div>
@@ -62,20 +64,27 @@
                                             <label class="form-label" for="manufacturer-name-input">Müşteri
                                                 Kodu:</label>
                                             <input type="text" class="form-control @error('code') is-invalid @enderror"
+                                                   value="{{ old('code') }}"
                                                    name="code">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-3">
-                                            <label class="form-label" for="manufacturer-name-input">Vergi Dairesi:</label>
-                                            <input type="text" class="form-control @error('tax_administration') is-invalid @enderror"
+                                            <label class="form-label" for="manufacturer-name-input">Vergi
+                                                Dairesi:</label>
+                                            <input type="text"
+                                                   class="form-control @error('tax_administration') is-invalid @enderror"
+                                                   value="{{ old('tax_administration') }}"
                                                    name="tax_administration">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-3">
-                                            <label class="form-label" for="manufacturer-name-input">Vergi Numarası/TC Kimlik Numarası:</label>
-                                            <input type="text" class="form-control @error('identity_number') is-invalid @enderror"
+                                            <label class="form-label" for="manufacturer-name-input">Vergi Numarası/TC
+                                                Kimlik Numarası:</label>
+                                            <input type="text"
+                                                   class="form-control @error('identity_number') is-invalid @enderror"
+                                                   value="{{ old('identity_number') }}"
                                                    name="identity_number">
                                         </div>
                                     </div>
@@ -88,8 +97,8 @@
                                             <label class="form-label" for="stocks-input">Cari:</label>
                                             <select name="current" id=""
                                                     class="form-select @error('current') is-invalid @enderror">
-                                                <option value="{{ CompanyCurrentEnum::CURRENT }}">Cari</option>
-                                                <option value="{{ CompanyCurrentEnum::NOT_CURRENT }}">Cari Değil
+                                                <option value="{{ CompanyCurrentEnum::CURRENT }}" selected>Cari</option>
+                                                <option value="{{ CompanyCurrentEnum::NOT_CURRENT }}" >Cari Değil
                                                 </option>
                                             </select>
                                         </div>
@@ -99,8 +108,8 @@
                                             <label class="form-label" for="stocks-input">Cari Ödeyebilir:</label>
                                             <select name="current_can_pay" id=""
                                                     class="form-select @error('current_can_pay') is-invalid @enderror">
-                                                <option value="{{ CompanyCurrentCanPayEnum::TRUE }}">Ödeyebilir</option>
-                                                <option value="{{ CompanyCurrentCanPayEnum::FALSE }}">Ödeyemez</option>
+                                                <option value="{{ CompanyCurrentCanPayEnum::TRUE }}" selected>Ödeyebilir</option>
+                                                <option value="{{ CompanyCurrentCanPayEnum::FALSE }}" >Ödeyemez</option>
                                             </select>
                                         </div>
                                     </div>
@@ -110,8 +119,8 @@
                                                 Ödeyebilir:</label>
                                             <select name="credit_can_pay" id=""
                                                     class="form-select @error('credit_can_pay') is-invalid @enderror">
-                                                <option value="{{ CompanyCreditCanPayEnum::TRUE }}">Ödeyebilir</option>
-                                                <option value="{{ CompanyCreditCanPayEnum::FALSE }}">Ödeyemez</option>
+                                                <option value="{{ CompanyCreditCanPayEnum::TRUE }}" >Ödeyebilir</option>
+                                                <option value="{{ CompanyCreditCanPayEnum::FALSE }}" selected>Ödeyemez</option>
                                             </select>
                                         </div>
                                     </div>
@@ -121,19 +130,22 @@
                                     <div class="col-lg-4 col-sm-6">
                                         <div class="mb-3">
                                             <label class="form-label" for="stocks-input">Genel İskonto:</label>
-                                            <input name="general_discount" type="number" step="any" min="0" id="" class="form-control @error('general_discount') is-invalid @enderror"/>
+                                            <input name="general_discount" type="number" step="any" min="0" id="" value="{{ old('general_discount') ?? 0 }}"
+                                                   class="form-control @error('general_discount') is-invalid @enderror"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-sm-6">
                                         <div class="mb-3">
                                             <label class="form-label" for="stocks-input">Peşin İskonto:</label>
-                                            <input name="advance_discount" type="number" step="any" min="0" id="" class="form-control @error('advance_discount') is-invalid @enderror"/>
+                                            <input name="advance_discount" type="number" step="any" min="0" id="" value="{{ old('advance_discount') ?? 0 }}"
+                                                   class="form-control @error('advance_discount') is-invalid @enderror"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-sm-6">
                                         <div class="mb-3">
                                             <label class="form-label" for="stocks-input">Tek Çekim İskonto:</label>
-                                            <input name="one_shot_discount" type="number" step="any" min="0" id="" class="form-control @error('one_shot_discount') is-invalid @enderror"/>
+                                            <input name="one_shot_discount" type="number" step="any" min="0" id="" value="{{ old('one_shot_discount') ?? 0 }}"
+                                                   class="form-control @error('one_shot_discount') is-invalid @enderror"/>
                                         </div>
                                     </div>
                                     <!-- end col -->
@@ -163,8 +175,9 @@
                                     <div class="flex-shrink-0">
                                         <ul class="list-inline card-toolbar-menu d-flex align-items-center mb-0">
                                             <li class="list-inline-item">
-                                                <a class="align-middle minimize-card  add-card" >
-                                                    <i class="mdi mdi-plus-box align-middle" style="font-size: 25px; cursor: pointer;"></i>
+                                                <a class="align-middle minimize-card  add-card">
+                                                    <i class="mdi mdi-plus-box align-middle"
+                                                       style="font-size: 25px; cursor: pointer;"></i>
                                                 </a>
                                             </li>
                                         </ul>
@@ -176,31 +189,37 @@
                                     <div class="col-lg-4 col-sm-6">
                                         <div class="mb-3">
                                             <label class="form-label" for="stocks-input">Görev:</label>
-                                            <input name="authorized_person[duty][]" type="text" class="form-control @error('authorized_person.duty') is-invalid @enderror"/>
+                                            <input name="authorized_person[duty][]" type="text"
+                                                   class="form-control @error('authorized_person.duty') is-invalid @enderror"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-sm-6">
                                         <div class="mb-3">
                                             <label class="form-label" for="stocks-input">Ad:</label>
-                                            <input name="authorized_person[name][]" type="text" class="form-control @error('authorized_person.name') is-invalid @enderror"/>
+                                            <input name="authorized_person[name][]" type="text"
+                                                   class="form-control @error('authorized_person.name') is-invalid @enderror"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-sm-6">
                                         <div class="mb-3">
                                             <label class="form-label" for="stocks-input">Telefon:</label>
-                                            <input name="authorized_person[phone][]"  id="cleave-phone2" placeholder="(xxx)xxx-xxxx" type="text" class="phone form-control @error('authorized_person.phone') is-invalid @enderror"/>
+                                            <input name="authorized_person[phone][]" id="cleave-phone2"
+                                                   placeholder="(xxx)xxx-xxxx" type="text"
+                                                   class="phone form-control @error('authorized_person.phone') is-invalid @enderror"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-sm-6">
                                         <div class="mb-3">
                                             <label class="form-label" for="stocks-input">GSM:</label>
-                                            <input name="authorized_person[gsm][]" type="text" class="form-control @error('authorized_person.gsm') is-invalid @enderror"/>
+                                            <input name="authorized_person[gsm][]" type="text"
+                                                   class="form-control @error('authorized_person.gsm') is-invalid @enderror"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-sm-6">
                                         <div class="mb-3">
                                             <label class="form-label" for="stocks-input">Email:</label>
-                                            <input name="authorized_person[email][]" type="text" class="form-control @error('authorized_person.email') is-invalid @enderror"/>
+                                            <input name="authorized_person[email][]" type="text"
+                                                   class="form-control @error('authorized_person.email') is-invalid @enderror"/>
                                         </div>
                                     </div>
                                     <!-- end col -->
@@ -224,11 +243,13 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <label for="cleave-phone" class="form-label">Telefon:</label>
-                            <input type="text" class="form-control" id="cleave-phone" name="phone" placeholder="(xxx)xxx-xxxx">
+                            <input type="text" class="form-control @error('phone') is-invalid @enderror" id="cleave-phone" name="phone"
+                                   value="{{ old('phone') }}"
+                                   placeholder="(xxx)xxx-xxxx">
                         </div>
                         <div>
                             <label for="choices-publish-visibility-input" class="form-label">E-Posta</label>
-                            <input type="email" class="form-control" name="email">
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" name="email">
                         </div>
                     </div>
                     <!-- end card body -->
@@ -240,14 +261,15 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <label for="city" class="form-label">İl:</label>
-                            <input type="text" class="form-control" name="city">
+                            <input type="text" class="form-control @error('city') is-invalid @enderror" value="{{ old('city') }}" name="city">
                         </div>
                         <div class="mb-3">
                             <label for="district" class="form-label">İlçe:</label>
-                            <input type="text" class="form-control" name="district">
+                            <input type="text" class="form-control @error('district') is-invalid @enderror" value="{{ old('district') }}"  name="district">
                         </div>
                         <div class="mb-3 " id="addresses">
-                            <p class="text-muted mb-2"><a onclick="addAddressLine()" class="float-end text-decoration-underline">Yeni
+                            <p class="text-muted mb-2"><a onclick="addAddressLine()"
+                                                          class="float-end text-decoration-underline">Yeni
                                     Adres Satırı</a></p>
                             <input type="text" class="form-control" name="address[]">
                         </div>
@@ -337,8 +359,8 @@
         let phone = document.getElementsByClassName('phone');
 
         for (var i = 0; i < phone.length; i++) {
-            cleaveBlocks=new Cleave(phone[i],
-                {delimiters:["(",")","-"],blocks:[0,3,3,4]})
+            cleaveBlocks = new Cleave(phone[i],
+                {delimiters: ["(", ")", "-"], blocks: [0, 3, 3, 4]})
         }
     </script>
     <script>

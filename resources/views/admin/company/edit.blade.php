@@ -93,8 +93,8 @@
                                             <label class="form-label" for="stocks-input">Cari:</label>
                                             <select name="current" id=""
                                                     class="form-select @error('current') is-invalid @enderror">
-                                                <option value="{{ CompanyCurrentEnum::CURRENT }}" @selected($company?->current === CompanyCurrentEnum::CURRENT || old('current') === CompanyCurrentEnum::CURRENT || false)>Cari</option>
-                                                <option value="{{ CompanyCurrentEnum::NOT_CURRENT }}" @selected($company?->current === CompanyCurrentEnum::NOT_CURRENT || old('current') === CompanyCurrentEnum::NOT_CURRENT || false)>Cari Değil
+                                                <option value="{{ CompanyCurrentEnum::CURRENT }}" @selected($company?->current === CompanyCurrentEnum::CURRENT || old('current') === CompanyCurrentEnum::CURRENT->value || false)>Cari</option>
+                                                <option value="{{ CompanyCurrentEnum::NOT_CURRENT }}" @selected($company?->current === CompanyCurrentEnum::NOT_CURRENT || old('current') === CompanyCurrentEnum::NOT_CURRENT->value || false)>Cari Değil
                                                 </option>
                                             </select>
                                         </div>
@@ -104,8 +104,8 @@
                                             <label class="form-label" for="stocks-input">Cari Ödeyebilir:</label>
                                             <select name="current_can_pay" id=""
                                                     class="form-select @error('current_can_pay') is-invalid @enderror">
-                                                <option value="{{ CompanyCurrentCanPayEnum::TRUE }}" @selected($company?->current_can_pay === CompanyCurrentCanPayEnum::TRUE || old('current') === CompanyCurrentCanPayEnum::TRUE || false)>Ödeyebilir</option>
-                                                <option value="{{ CompanyCurrentCanPayEnum::FALSE }}" @selected($company?->current_can_pay === CompanyCurrentCanPayEnum::FALSE || old('current') === CompanyCurrentCanPayEnum::FALSE || false)>Ödeyemez</option>
+                                                <option value="{{ CompanyCurrentCanPayEnum::TRUE }}" @selected($company?->current_can_pay === CompanyCurrentCanPayEnum::TRUE || old('current') === CompanyCurrentCanPayEnum::TRUE->value || false)>Ödeyebilir</option>
+                                                <option value="{{ CompanyCurrentCanPayEnum::FALSE }}" @selected($company?->current_can_pay === CompanyCurrentCanPayEnum::FALSE || old('current') === CompanyCurrentCanPayEnum::FALSE->value || false)>Ödeyemez</option>
                                             </select>
                                         </div>
                                     </div>
@@ -115,8 +115,8 @@
                                                 Ödeyebilir:</label>
                                             <select name="credit_can_pay" id=""
                                                     class="form-select @error('credit_can_pay') is-invalid @enderror">
-                                                <option value="{{ CompanyCreditCanPayEnum::TRUE }}"  @selected($company?->credit_can_pay === CompanyCreditCanPayEnum::TRUE || old('current') === CompanyCreditCanPayEnum::TRUE || false)>Ödeyebilir</option>
-                                                <option value="{{ CompanyCreditCanPayEnum::FALSE }}"  @selected($company?->credit_can_pay === CompanyCreditCanPayEnum::TRUE || old('current') === CompanyCreditCanPayEnum::TRUE || false)>Ödeyemez</option>
+                                                <option value="{{ CompanyCreditCanPayEnum::TRUE }}"  @selected($company?->credit_can_pay === CompanyCreditCanPayEnum::TRUE || old('current') === CompanyCreditCanPayEnum::TRUE->value || false)>Ödeyebilir</option>
+                                                <option value="{{ CompanyCreditCanPayEnum::FALSE }}"  @selected($company?->credit_can_pay === CompanyCreditCanPayEnum::TRUE || old('current') === CompanyCreditCanPayEnum::TRUE->value || false)>Ödeyemez</option>
                                             </select>
                                         </div>
                                     </div>

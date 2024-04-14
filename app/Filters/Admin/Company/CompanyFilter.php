@@ -26,4 +26,30 @@ class CompanyFilter extends ModelFilter
 
         return $this->whereLike('name', $value);
     }
+
+    /**
+     * @param $value
+     * @return $this
+     */
+    public function city($value): static
+    {
+        if (is_null($value)) {
+            return $this;
+        }
+
+        return $this->whereLike('city', $value);
+    }
+
+    /**
+     * @param $value
+     * @return $this
+     */
+    public function district($value): static
+    {
+        if (is_null($value)) {
+            return $this;
+        }
+
+        return $this->whereLike('district', $value);
+    }
 }
