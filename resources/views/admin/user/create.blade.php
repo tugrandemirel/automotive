@@ -48,14 +48,6 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="mb-3">
-                                            <label class="form-label" for="manufacturer-name-input">Ad/Ünvan:</label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                                   value="{{ old('name') }}"
-                                                   name="name">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
                                             <label class="form-label" for="manufacturer-name-input">Kullanıcı
                                                 Adı:</label>
                                             <input type="text"
@@ -152,5 +144,23 @@
             cleaveBlocks = new Cleave(phone[i],
                 {delimiters: ["(", ")", "-"], blocks: [0, 3, 3, 4]})
         }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('input[name="username"]').keypress(function () {
+                let username = $(this)
+                let value = username.val()
+                let usernameRegex = /[\sışçöüğİŞÇÖÜĞ]/; // Boşluk ve Türkçe karakter içermeyen regex
+                if(usernameRegex.test(value)) {
+                    Swal.fire({
+                        title: "Hata!",
+                        text: "Kullanıcı adında türkçe karakter ve boşluk olmamalıdır.",
+                        icon: "error",
+                        confirmButtonText: "Tamam!",
+                    })
+                    return false
+                }
+            })
+        })
     </script>
 @endpush

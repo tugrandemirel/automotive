@@ -2,7 +2,7 @@
 
 @extends('admin.layouts.app')
 @push('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 @endpush
 @section('content')
 
@@ -24,7 +24,8 @@
         </div>
     </div>
 
-    <form id="" autocomplete="off" action="{{ route('admin.user.update', ['user' => $user?->hashid()]) }}" method="post" enctype="multipart/form-data">
+    <form id="" autocomplete="off" action="{{ route('admin.user.update', ['user' => $user?->hashid()]) }}" method="post"
+          enctype="multipart/form-data">
         @method('PUT')
         @csrf
         <div class="row justify-content-center">
@@ -49,14 +50,6 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="mb-3">
-                                            <label class="form-label" for="manufacturer-name-input">Ad/Ünvan:</label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                                   value="{{ old('name') ? old('name') : $user?->name }}"
-                                                   name="name">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
                                             <label class="form-label" for="manufacturer-name-input">Kullanıcı
                                                 Adı:</label>
                                             <input type="text"
@@ -68,7 +61,8 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label" for="manufacturer-name-input">Telefon:</label>
-                                            <input type="text" class="form-control phone @error('phone') is-invalid @enderror"
+                                            <input type="text"
+                                                   class="form-control phone @error('phone') is-invalid @enderror"
                                                    placeholder="(xxx)xxx-xxxx"
                                                    value="{{ old('phone') ? old('phone') : $user?->phone }}"
                                                    name="phone">
@@ -96,8 +90,14 @@
                                             <label class="form-label" for="manufacturer-name-input">Kulanıcı
                                                 Durumu:</label>
                                             <select class="form-control" name="status">
-                                                <option value="{{ UserStatusEnum::ACTIVE }}" @selected(old('status') && old('status') === UserStatusEnum::ACTIVE ? old('status') === UserStatusEnum::ACTIVE : $user?->status === UserStatusEnum::ACTIVE)>Aktif</option>
-                                                <option value="{{ UserStatusEnum::PASSIVE }}" @selected(old('status') && old('status') === UserStatusEnum::PASSIVE ? old('status') === UserStatusEnum::PASSIVE : $user?->status === UserStatusEnum::PASSIVE)>Pasif</option>
+                                                <option
+                                                    value="{{ UserStatusEnum::ACTIVE }}" @selected(old('status') && old('status') === UserStatusEnum::ACTIVE ? old('status') === UserStatusEnum::ACTIVE : $user?->status === UserStatusEnum::ACTIVE)>
+                                                    Aktif
+                                                </option>
+                                                <option
+                                                    value="{{ UserStatusEnum::PASSIVE }}" @selected(old('status') && old('status') === UserStatusEnum::PASSIVE ? old('status') === UserStatusEnum::PASSIVE : $user?->status === UserStatusEnum::PASSIVE)>
+                                                    Pasif
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -105,8 +105,9 @@
                                         <div class="mb-3">
                                             <label class="form-label" for="manufacturer-name-input">Firmalar:</label>
                                             <select class="form-control company" name="company">
-                                             @forelse($companies as $company)
-                                                    <option value="{{ $company?->id }}" @selected(old('company') && old('company') === $company?->id ? old('company') === $company?->id : $user?->company_id === $company?->id)>{{ $company?->name }}</option>
+                                                @forelse($companies as $company)
+                                                    <option
+                                                        value="{{ $company?->id }}" @selected(old('company') && old('company') === $company?->id ? old('company') === $company?->id : $user?->company_id === $company?->id)>{{ $company?->name }}</option>
                                                 @empty
                                                     <option value="">LÜTFEN FİRMA OLUŞTURUNUZ</option>
                                                 @endforelse
@@ -142,7 +143,7 @@
     <script src="{{ asset('assets/admin/js/pages/form-masks.init.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.company').select2();
         });
     </script>
@@ -153,5 +154,23 @@
             cleaveBlocks = new Cleave(phone[i],
                 {delimiters: ["(", ")", "-"], blocks: [0, 3, 3, 4]})
         }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('input[name="username"]').keypress(function () {
+                let username = $(this)
+                let value = username.val()
+                let usernameRegex = /[\sışçöüğİŞÇÖÜĞ]/; // Boşluk ve Türkçe karakter içermeyen regex
+                if(usernameRegex.test(value)) {
+                    Swal.fire({
+                        title: "Hata!",
+                        text: "Kullanıcı adında türkçe karakter ve boşluk olmamalıdır.",
+                        icon: "error",
+                        confirmButtonText: "Tamam!",
+                    })
+                    return false
+                }
+            })
+        })
     </script>
 @endpush

@@ -17,9 +17,9 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Company::class)->nullable();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('surname')->nullable();
-            $table->string('username')->nullable();
+            $table->string('username');
             $table->string('phone')->nullable();
             $table->tinyInteger('role')->default(UserRoleEnum::USER->value);
             $table->boolean('status')->default(UserStatusEnum::PASSIVE->value);

@@ -89,20 +89,20 @@
         <div class="row">
             <!-- Start Logo Area Wrap -->
             <div class="col-6 col-lg-2"><a href="{{ route('home') }}" class="logo-wrap d-block"><img
-                        src="{{ asset('images/oto-yedek-parca.jpg') }}" class="sticky-logo" alt="Black Logo"></a></div>
+                        src="{{ asset('images/oto-yedek-parca.jpg') }}" width="100" class="sticky-logo" alt="Black Logo"></a></div>
             <!-- End Logo Area Wrap -->
         </div>
     </div>
 </header>
 <!--== End Header Area Wrapper ==-->
 <!--== Start Page Header Area ==-->
-<div class="page-header-wrapper bg-offwhite">
+<div class="page-header-wrapper bg-offwhite" style="margin-top: 0;">
     <div class="container">
         <div class="row">
             <div class="col-12 text-center">
-                <div class="page-header-content d-flex">
-                    <h1>SYN Oto Yedek Parça GİRİŞ Ekranı</h1>
-                </div>
+{{--                <div class="page-header-content d-flex">--}}
+{{--                    <h6>SYN Oto Yedek Parça GİRİŞ Ekranı</h6>--}}
+{{--                </div>--}}
             </div>
         </div>
     </div>
@@ -127,8 +127,8 @@
                                 @csrf
 
                                 <div class="single-input-item">
-                                    <label for="email" class="required">E-Posta Adresi</label>
-                                    <input type="email" id="email" placeholder="E-Posta Adresi"  name="email" value="{{ old('email') }}" required autofocus autocomplete="username">
+                                    <label for="email" class="required">Kullanıcı Adı</label>
+                                    <input type="text" id="email" placeholder="Kullanıcı Adı"  name="username" value="{{ old('username') }}" required autofocus autocomplete="username">
                                 </div>
                                 <div class="single-input-item"><label for="com-name">Şifre</label>
                                     <input type="password"  id="password"
