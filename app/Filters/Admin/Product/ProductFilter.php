@@ -24,6 +24,7 @@ class ProductFilter extends ModelFilter
             return $this;
         }
 
-        return $this->whereLike('name', $value);
+        return $this->whereLike('name', $value)
+            ->orWhereLike('code', trim($value));
     }
 }

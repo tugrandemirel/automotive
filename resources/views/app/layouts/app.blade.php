@@ -70,7 +70,7 @@
                         </nav>
                     </div>
                     <div class="off-canvas-area-wrap nav"><a href="{{ route('cart.index') }}" class="cart-button"><i
-                                class="fa fa-shopping-cart"></i> <span class="count">2</span> </a>
+                                class="fa fa-shopping-cart"></i> <span class="count">{{ $cardCount }}</span> </a>
                         <button
                             class="search-box-open d-block d-lg-none"><i class="fa fa-search"></i></button>
                         <button

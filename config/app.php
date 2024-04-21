@@ -171,6 +171,7 @@ return [
 
         EloquentFilter\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        \App\Providers\ViewComposerProvider::class
 
     ])->toArray(),
 
