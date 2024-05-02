@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Company\CompanyController;
+use App\Http\Controllers\Admin\Finance\FinanceController;
 use App\Http\Controllers\Admin\Product\ProductController;
 use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Front\CartController;
@@ -69,6 +70,11 @@ Route::prefix('admin')->as('admin.')->middleware(['auth', 'verified', 'isRole'])
         ->parameter('urunler', 'product')
         ->names('product')
         ->except('show');
+
+    Route::prefix('finans')->as('finance.')->group(function () {
+        Route::get('/', [FinanceController::class, 'index'])->name('index');
+        Route::get('/detay/{company}', [FinanceController::class, 'show'])->name('show');
+    });
 });
 
 Route::middleware('auth')->group(function () {

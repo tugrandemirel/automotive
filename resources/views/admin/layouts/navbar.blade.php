@@ -35,6 +35,12 @@
                 </a>
             </li> <!-- end Dashboard Menu -->
 
+            <li class="nav-item">
+                <a class="nav-link " href="{{ route('admin.finance.index') }}" >
+                    <i class="mdi mdi-cash-fast"></i> <span data-key="t-dashboards">Finans</span>
+                </a>
+            </li> <!-- end Dashboard Menu -->
+
         </ul>
     </div>
     <!-- Sidebar -->

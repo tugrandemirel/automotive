@@ -68,6 +68,10 @@ class Company extends Model
         return $this->hasOne(User::class);
     }
 
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
 
     public function scopeWhereLike($query, $column, $value)
     {

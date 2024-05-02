@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Enum\Order\OrderStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Company;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
@@ -25,9 +26,11 @@ class OrderController extends Controller
     {
         /** @var User $user */
         $user = auth()->user();
+        /** @var Company $company */
+        $company = $user->company;
 
         $orders = Order::query()
-            ->whereRelation('user', 'user_id', '=', $user->id)
+            ->whereRelation('company', 'company_id', '=', $company?->id)
             ->with(['user', 'company'])
             ->orderByDesc('id')
             ->paginate(20);
