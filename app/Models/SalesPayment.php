@@ -27,6 +27,25 @@ class SalesPayment extends Model
         'amount' => 'float',
     ];
 
+
+    public function getPaymentMethodFormattedAttribute(): string
+    {
+        $values = [
+            SalesPaymentPaymentMethodEnum::SALES->value => 'Satış',
+            SalesPaymentPaymentMethodEnum::PAYMENT->value => 'Ödeme',
+        ];
+        return $values[$this->payment_method->value];
+    }
+
+    public function getPaymentMethodColorFormattedAttribute(): string
+    {
+        $values = [
+            SalesPaymentPaymentMethodEnum::SALES->value => 'success',
+            SalesPaymentPaymentMethodEnum::PAYMENT->value => 'danger',
+        ];
+        return $values[$this->payment_method->value];
+    }
+
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);

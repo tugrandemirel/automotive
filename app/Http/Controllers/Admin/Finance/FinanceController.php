@@ -40,6 +40,7 @@ class FinanceController extends Controller
             ->with('user')
             ->paginate(20);
 
-        return view('admin.finance.show', compact('orders'));
+        return view('admin.finance.show', compact('orders', 'company'));
     }
+
 }

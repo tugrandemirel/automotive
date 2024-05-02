@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Company\CompanyController;
 use App\Http\Controllers\Admin\Finance\FinanceController;
+use App\Http\Controllers\Admin\Finance\SalesPaymentController;
 use App\Http\Controllers\Admin\Product\ProductController;
 use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Front\CartController;
@@ -74,6 +75,11 @@ Route::prefix('admin')->as('admin.')->middleware(['auth', 'verified', 'isRole'])
     Route::prefix('finans')->as('finance.')->group(function () {
         Route::get('/', [FinanceController::class, 'index'])->name('index');
         Route::get('/detay/{company}', [FinanceController::class, 'show'])->name('show');
+
+        Route::prefix('/{company}/detay')->as('salesPayment.')->group(function (){
+            Route::get('/{order}', [SalesPaymentController::class, 'index'])->name('index');
+        });
+
     });
 });
 
