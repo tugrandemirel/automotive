@@ -26,4 +26,9 @@ class Currency extends Model
     {
         return $this->hasMany(Currency::class);
     }
+
+    public function salesPayments(): HasMany
+    {
+        return $this->hasMany(SalesPayment::class);
+    }
 }

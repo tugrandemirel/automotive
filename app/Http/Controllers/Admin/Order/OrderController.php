@@ -12,6 +12,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -144,7 +145,10 @@ class OrderController extends Controller
         return view('admin.order.show', compact('user', 'company','orderDetails', 'order'));
     }
 
-    public function setStatus(OrderChangeStatusRequest $request, string $id)
+    /**
+     * @throws \Throwable
+     */
+    public function setStatus(OrderChangeStatusRequest $request, string $id): JsonResponse
     {
 
         $attributes = collect($request->validated());
@@ -156,6 +160,20 @@ class OrderController extends Controller
 
         throw_unless($order->update($attributes->toArray()), QueryException::class, 'Sipariş durumu değiştirme işlemi sırasında bir hata ile karılaşıldı.');
         throw_unless($order->orderDetails()->update($attributes->toArray()), QueryException::class, 'Sipariş durumu değiştirme işlemi sırasında bir hata ile karılaşıldı.');
+
+        if($attributes->get('status') == OrderStatusEnum::COMPLETED->value) {
+            $orderAmount = $order->orderDetails()->sum('total_price');
+            $currencyId = $order->orderDetails()->select('currency_id')->latest()->first()->currency_id;
+
+            $salesPaymentCreate =  $order->salesPayments()->create([
+                'currency_id' => $currencyId,
+                'description' => 'Sistem üzerinden satın alma işlemi',
+                'payment_method' => $order?->payment_method,
+                'amount' => $orderAmount
+            ]);
+
+            throw_unless($salesPaymentCreate, QueryException::class, 'Satış işlemi finans modülüne düşmedi.');
+        }
 
         return $this->success(['message' => 'Başarılı bir şekilde durum güncellemesi gerçekleştirildi.']);
     }
