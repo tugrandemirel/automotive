@@ -17,7 +17,7 @@
         </div>
     </div>
     <!-- end page title -->
-
+    @isset($order)
     <div class="row">
         <div class="col-xl-9">
             <div class="card">
@@ -139,7 +139,7 @@
                 </div>
             </div>--}}
             <!--end card-->
-
+            @isset($company)
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex">
@@ -164,7 +164,8 @@
                     </ul>
                 </div>
             </div>
-
+            @endisset
+            @isset($user)
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex">
@@ -189,6 +190,8 @@
                     </ul>
                 </div>
             </div>
+            @endisset
+            @isset($company)
             <!--end card-->
             <div class="card">
                 <div class="card-header">
@@ -208,11 +211,13 @@
                     </ul>
                 </div>
             </div>
+            @endisset
             <!--end card-->
 
             <!--end card-->
         </div>
         <!--end col-->
     </div>
+    @endisset
     <!--end row-->
 @endsection

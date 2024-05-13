@@ -74,10 +74,14 @@ Route::prefix('admin')->as('admin.')->middleware(['auth', 'verified', 'isRole'])
 
     Route::prefix('finans')->as('finance.')->group(function () {
         Route::get('/', [FinanceController::class, 'index'])->name('index');
-        Route::get('/detay/{company}', [FinanceController::class, 'show'])->name('show');
+        Route::get('/detay/{company}/satislar', [FinanceController::class, 'show'])->name('show');
+        Route::get('/detay/{company}/ödemeler', [FinanceController::class, 'payment'])->name('payment');
 
         Route::prefix('/{company}/detay')->as('salesPayment.')->group(function (){
             Route::get('/{order}', [SalesPaymentController::class, 'index'])->name('index');
+            Route::post('/', [SalesPaymentController::class, 'store'])->name('store');
+            Route::post('/update/{salesPayment}', [SalesPaymentController::class, 'update'])->name('update');
+            Route::delete('/destroy/{salesPayment}', [SalesPaymentController::class, 'destroy'])->name('destroy');
         });
 
     });

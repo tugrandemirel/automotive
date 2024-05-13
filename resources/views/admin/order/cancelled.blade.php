@@ -32,7 +32,7 @@
                 </div>
                 <div class="card-body pt-0">
                     <div>
-                        <x-order.order-navbar :active="'cancelled'"/>
+                        <x-order.order-navbar :active="'cancel'"/>
                         <x-order.order-table :orders="$orders"/>
                     </div>
                 </div>

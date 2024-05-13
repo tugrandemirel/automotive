@@ -1,6 +1,7 @@
 <?php
 
 use App\Enum\SalesPayment\SalesPaymentPaymentMethodEnum;
+use App\Models\Company;
 use App\Models\Currency;
 use App\Models\Order;
 use Illuminate\Database\Migrations\Migration;
@@ -16,12 +17,13 @@ return new class extends Migration
     {
         Schema::create('sales_payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Order::class);
+            $table->foreignIdFor(Company::class);
             $table->foreignIdFor(Currency::class)->nullable();
             $table->text('description')->nullable();
             $table->string('type')->nullable();
             $table->boolean('payment_method')->default(SalesPaymentPaymentMethodEnum::SALES->value);
             $table->decimal('amount', 10,2);
+            $table->timestamp('payment_date');
             $table->timestamps();
         });
     }

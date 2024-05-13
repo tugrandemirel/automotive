@@ -85,9 +85,4 @@ class Order extends Model
     {
         return $query->orWhere($column, 'like', '%'.$value.'%');
     }
-
-    public function salesPayments(): HasMany
-    {
-        return $this->hasMany(SalesPayment::class);
-    }
 }

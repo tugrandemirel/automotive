@@ -28,9 +28,8 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link {{ isset($active) && $active === 'cancelled'? 'active' : '' }} py-3 Cancelled" id="Cancelled"  href="{{ route('admin.order.cancelled') }}" role="tab" aria-selected="false">
+        <a class="nav-link {{ isset($active) && $active === 'cancel' ? 'active' : '' }} py-3 Cancelled" id="Cancelled"  href="{{ route('admin.order.cancelled') }}" role="tab" aria-selected="false">
             <i class="ri-close-circle-line me-1 align-bottom"></i> İptal Edilen
         </a>
     </li>
-
 </ul>

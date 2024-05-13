@@ -105,7 +105,7 @@
                                 @foreach($users as $user)
                                     <tr>
                                         <td class="customer_name">{{ $user?->company?->name ?? '-' }}</td>
-                                        <td class="phone">{{ $user?->full_name ?? '-' }}</td>
+                                        <td class="phone">{{ $user?->username ?? '-' }}</td>
                                         <td class="email">
                                             {{ $user?->email ?? '-' }}
                                         </td>

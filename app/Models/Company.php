@@ -73,6 +73,11 @@ class Company extends Model
         return $this->hasMany(Order::class);
     }
 
+    public function carts(): HasMany
+    {
+        return $this->hasMany(Cart::class);
+    }
+
     public function scopeWhereLike($query, $column, $value)
     {
         return $query->where($column, 'like', '%'.$value.'%');
@@ -81,5 +86,23 @@ class Company extends Model
     public function scopeOrWhereLike($query, $column, $value)
     {
         return $query->orWhere($column, 'like', '%'.$value.'%');
+    }
+
+    public function salesPayments(): HasMany
+    {
+        return $this->hasMany(SalesPayment::class);
+    }
+
+    public function getTotalOrderAmount()
+    {
+        // Şirkete ait tüm siparişlerin ID'lerini alın
+        $orderIds = $this->orders()->pluck('id');
+
+        // Bu siparişlere ait orderDetails tablosundaki total_price değerlerinin toplamını alın
+        $totalAmount = OrderDetail::query()
+            ->whereIn('order_id', $orderIds)
+            ->sum('total_price');
+
+        return $totalAmount;
     }
 }

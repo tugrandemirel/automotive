@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enum\SalesPayment\SalesPaymentPaymentMethodEnum;
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,20 +12,22 @@ use Mtvs\EloquentHashids\HashidRouting;
 
 class SalesPayment extends Model
 {
-    use HasFactory, HasHashid, HashidRouting;
+    use HasFactory, HasHashid, HashidRouting, Filterable;
 
     protected $fillable = [
-        'order_id',
+        'company_id',
         'currency_id',
         'description',
         'type',
         'payment_method',
         'amount',
+        'payment_date'
     ];
 
     protected $casts = [
         'payment_method' => SalesPaymentPaymentMethodEnum::class,
         'amount' => 'float',
+        'payment_date' => 'datetime'
     ];
 
 
@@ -46,9 +49,9 @@ class SalesPayment extends Model
         return $values[$this->payment_method->value];
     }
 
-    public function order(): BelongsTo
+    public function company(): BelongsTo
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(Company::class);
     }
 
     public function currency(): BelongsTo

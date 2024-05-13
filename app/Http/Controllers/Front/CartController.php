@@ -32,7 +32,6 @@ class CartController extends Controller
 
         /** @var Cart $carts */
         $carts = Cart::query()
-            ->whereRelation('user', 'user_id', $user?->id)
             ->whereRelation('company', 'company_id', $company?->id)
             ->with(['product', 'currency', 'category', 'brand'])
             ->get();

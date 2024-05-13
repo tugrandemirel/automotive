@@ -11,6 +11,7 @@
                                 <table class="table table-bordered text-center">
                                     <thead>
                                     <tr>
+                                        <th>KULLANICI ADI</th>
                                         <th>REF KOD</th>
                                         <th>ÜRÜN ADI</th>
                                         <th>MARKA</th>
@@ -30,6 +31,7 @@
                                     @endphp
                                     @forelse($carts as $cart)
                                         <tr>
+                                            <td>{{ $cart?->user?->username ?? '-' }}</td>
                                             <td>{{ $cart?->product_code ?? '-' }}</td>
                                             <td class="product-list">
                                                 <div class="cart-product-item d-flex align-items-center">

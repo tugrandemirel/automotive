@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Order\OrderChangeStatusRequest;
 use App\Models\Order;
 use App\Traits\ResponderTrait;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\QueryException;
@@ -155,25 +156,28 @@ class OrderController extends Controller
 
         /** @var Order $order */
         $order = Order::query()
-            ->with('orderDetails')
+            ->with('orderDetails', 'company')
             ->findByHashidOrFail($id);
+
+        $company = $order->company;
 
         throw_unless($order->update($attributes->toArray()), QueryException::class, 'Sipariş durumu değiştirme işlemi sırasında bir hata ile karılaşıldı.');
         throw_unless($order->orderDetails()->update($attributes->toArray()), QueryException::class, 'Sipariş durumu değiştirme işlemi sırasında bir hata ile karılaşıldı.');
 
-        if($attributes->get('status') == OrderStatusEnum::COMPLETED->value) {
+        /*f($attributes->get('status') == OrderStatusEnum::COMPLETED->value) {
             $orderAmount = $order->orderDetails()->sum('total_price');
             $currencyId = $order->orderDetails()->select('currency_id')->latest()->first()->currency_id;
 
-            $salesPaymentCreate =  $order->salesPayments()->create([
+            $salesPaymentCreate =  $company->salesPayments()->create([
                 'currency_id' => $currencyId,
                 'description' => 'Sistem üzerinden satın alma işlemi',
                 'payment_method' => $order?->payment_method,
-                'amount' => $orderAmount
+                'amount' => $orderAmount,
+                'payment_date' => Carbon::now()
             ]);
 
             throw_unless($salesPaymentCreate, QueryException::class, 'Satış işlemi finans modülüne düşmedi.');
-        }
+        }*/
 
         return $this->success(['message' => 'Başarılı bir şekilde durum güncellemesi gerçekleştirildi.']);
     }

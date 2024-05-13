@@ -26,7 +26,7 @@
                     <td class="name">
                         {{ $order?->user?->full_name ??'-' }}
                     </td>
-                    <td class="date">{{ $order?->created_at ?? '-' }}</td>
+                    <td class="date">{{ $order?->created_at?->format('d/m/y') ?? '-' }}</td>
                     <td class="amount">
                         {{ $order?->order_details_count ?? '-' }}
                     </td>

@@ -2,6 +2,7 @@
 
 namespace App\ViewComposer;
 
+use App\Models\Company;
 use Illuminate\View\View;
 
 class AppComposer
@@ -10,7 +11,10 @@ class AppComposer
     {
         $user = auth()->user();
 
-        $cardCount =  $user->carts()->count() ?? 0;
+        /** @var Company $company */
+        $company = $user->load('company')->company;
+
+        $cardCount =  $company->carts()->count() ?? 0;
 
         $view->with('cardCount', $cardCount);
     }

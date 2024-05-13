@@ -103,7 +103,7 @@
                                                     {{ $salesPayment?->payment_method_formatted ??'-' }}
                                                 </span>
                                             </td>
-                                            <td class="">{{ $salesPayment?->created_at ?? '-' }}</td>
+                                            <td class="">{{ $salesPayment?->created_at?->format('d/m/y') ?? '-' }}</td>
                                             <td class="">{{ $salesPayment?->description ?? '-' }}</td>
 
                                             <td class="">{{ $salesPayment?->amount ?? 0 }}</td>
@@ -133,17 +133,29 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalgridLabel">Ürün Yükle</h5>
+                    <h5 class="modal-title" id="exampleModalgridLabel">Ödeme Ekle</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('admin.product.import') }}" enctype="multipart/form-data" method="POST">
+                    <form action="{{ route('admin.finance.salesPayment.store', ['company' => $company?->hashid(), 'order' => $order?->hashid()]) }}" enctype="multipart/form-data" method="POST">
                         @csrf
                         <div class="row g-3">
                             <div class="col-xxl-12">
                                 <div>
-                                    <label for="importExcel" class="form-label">Excel Dosyası</label>
-                                    <input type="file" class="form-control" name="file" id="importExcel">
+                                    <label for="importExcel" class="form-label">Açıklama</label>
+                                    <input type="text" class="form-control" name="description">
+                                </div>
+                            </div><!--end col-->
+                            <div class="col-xxl-12">
+                                <div>
+                                    <label for="importExcel" class="form-label">Ödeme Şekli</label>
+                                    <input type="text" class="form-control" name="type">
+                                </div>
+                            </div><!--end col-->
+                            <div class="col-xxl-12">
+                                <div>
+                                    <label for="importExcel" class="form-label">Tutar</label>
+                                    <input type="number" class="form-control" name="amount">
                                 </div>
                             </div><!--end col-->
                             <div class="col-lg-12">
