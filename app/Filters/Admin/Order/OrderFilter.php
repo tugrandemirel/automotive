@@ -2,7 +2,9 @@
 
 namespace App\Filters\Admin\Order;
 
+use Carbon\Carbon;
 use EloquentFilter\ModelFilter;
+use Illuminate\Support\Str;
 
 class OrderFilter extends ModelFilter
 {
@@ -30,6 +32,24 @@ class OrderFilter extends ModelFilter
         }
 
         return $this->where('status', $value);
+    }
+
+    public function dates($value)
+    {
+        if (is_null($value)) {
+            return $this;
+        }
+
+        if (Str::contains($value,  '-')) {
+            $dates = explode(' - ', $value);
+            if (count($dates) === 2) {
+                return $this->whereBetween('created_at', [
+                    Carbon::parse($dates[0])->startOfDay(),
+                    Carbon::parse($dates[1])->endOfDay(),
+                ]);
+            }
+        }
+        return $this;
     }
 
 }

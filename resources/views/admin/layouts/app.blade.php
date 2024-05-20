@@ -23,6 +23,7 @@
     <link href="{{ asset('assets/admin/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
     @stack('css')
 
@@ -42,19 +43,19 @@
             <!-- Dark Logo-->
             <a href="{{ route('admin.index') }}" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{ asset('assets/admin/images/logo-sm.png') }}" alt="" height="22">
+                        <img src="{{ asset('images/oto-yedek-parca.jpg') }}" alt="" height="75">
                     </span>
                 <span class="logo-lg">
-                        <img src="{{ asset('assets/admin/images/logo-dark.png') }}" alt="" height="17">
+                        <img src="{{ asset('images/oto-yedek-parca.jpg') }}" alt=""height="75">
                     </span>
             </a>
             <!-- Light Logo-->
             <a href="{{ route('admin.index') }}" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{ asset('assets/admin/images/logo-sm.png') }}" alt="" height="22">
+                        <img src="{{ asset('images/oto-yedek-parca.jpg') }}" alt=""height="75">
                     </span>
                 <span class="logo-lg">
-                        <img src="{{ asset('assets/admin/images/logo-light.png') }}" alt="" height="17">
+                        <img src="{{ asset('images/oto-yedek-parca.jpg') }}" alt=""height="75">
                     </span>
             </a>
             <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
@@ -129,7 +130,15 @@
 <script src="{{ asset('assets/admin/js/pages/plugins/lord-icon-2.1.0.js') }}"></script>
 <script src="{{ asset('assets/admin/js/plugins.js') }}"></script>
 <script src="{{ asset('assets/admin/js/pages/ecommerce-product-list.init.js') }}"></script>
-
+<script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/tr.js"></script>
+<script>
+    flatpickr($('input[name="dates"]'), {
+        mode: 'range',
+        locale: 'tr',
+        dateFormat: "Y/m/d",
+    });
+</script>
 @include('sweetalert::alert')
 
 <!-- App js -->

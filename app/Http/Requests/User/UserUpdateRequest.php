@@ -26,7 +26,7 @@ class UserUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => 'required|string|min:3|max:190|unique:App\Models\User,username',
+            'username' => 'required|string|min:3|max:190',
             'phone' => 'required|string|min:3|max:15',
             'email' => 'required|string|min:3|max:50|email',
             'password' => ['nullable', Password::defaults()],

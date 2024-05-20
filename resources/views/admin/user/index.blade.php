@@ -54,10 +54,15 @@
                                     <i class="ri-search-line search-icon"></i>
                                 </div>
                             </div>
-                            <!--end col-->
-                            <!--end col-->
-
-                            <!--end col-->
+                            <div class="col-xxl-2 col-sm-4">
+                                <div>
+                                    <select class="form-control" name="status" id="idStatus">
+                                        <option value="" disabled selected >Durum</option>
+                                        <option value="{{ UserStatusEnum::ACTIVE }}" @selected(request()->get('status') === (string)UserStatusEnum::ACTIVE->value)>Aktif</option>
+                                        <option value="{{ UserStatusEnum::PASSIVE }}" @selected(request()->get('status') === (string)UserStatusEnum::PASSIVE->value)>Pasif</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-xxl-1 col-sm-4">
                                 <div class="hstack gap-2 ">
                                     <button type="submit" class="btn btn-primary w-100">

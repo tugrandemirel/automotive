@@ -48,6 +48,20 @@
                         <div class="tab-content">
                             <div class="tab-pane active" id="addproduct-general-info" role="tabpanel">
                                 <div class="row">
+
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="manufacturer-name-input">Firmalar:</label>
+                                            <select class="form-control company" name="company">
+                                                @forelse($companies as $company)
+                                                    <option
+                                                        value="{{ $company?->id }}" @selected(old('company') && old('company') === (string)$company?->id ? old('company') === $company?->id : $user?->company_id === $company?->id)>{{ $company?->name }}</option>
+                                                @empty
+                                                    <option value="">LÜTFEN FİRMA OLUŞTURUNUZ</option>
+                                                @endforelse
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label" for="manufacturer-name-input">Kullanıcı
@@ -58,16 +72,7 @@
                                                    name="username">
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label class="form-label" for="manufacturer-name-input">Telefon:</label>
-                                            <input type="text"
-                                                   class="form-control phone @error('phone') is-invalid @enderror"
-                                                   placeholder="(xxx)xxx-xxxx"
-                                                   value="{{ old('phone') ? old('phone') : $user?->phone }}"
-                                                   name="phone">
-                                        </div>
-                                    </div>
+
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label" for="manufacturer-name-input">E-Posta:</label>
@@ -103,15 +108,12 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-3">
-                                            <label class="form-label" for="manufacturer-name-input">Firmalar:</label>
-                                            <select class="form-control company" name="company">
-                                                @forelse($companies as $company)
-                                                    <option
-                                                        value="{{ $company?->id }}" @selected(old('company') && old('company') === $company?->id ? old('company') === $company?->id : $user?->company_id === $company?->id)>{{ $company?->name }}</option>
-                                                @empty
-                                                    <option value="">LÜTFEN FİRMA OLUŞTURUNUZ</option>
-                                                @endforelse
-                                            </select>
+                                            <label class="form-label" for="manufacturer-name-input">Telefon:</label>
+                                            <input type="text"
+                                                   class="form-control phone @error('phone') is-invalid @enderror"
+                                                   placeholder="(xxx)xxx-xxxx"
+                                                   value="{{ old('phone') ? old('phone') : $user?->phone }}"
+                                                   name="phone">
                                         </div>
                                     </div>
                                 </div>

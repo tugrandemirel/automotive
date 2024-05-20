@@ -101,15 +101,15 @@
                                 <table class="table table-nowrap align-middle" id="orderTable">
                                     <thead class="text-muted table-light">
                                     <tr class="text-uppercase">
-                                        <th class="sort" data-sort="customer_name">Ad/Ünvan</th>
-                                        <th class="sort" data-sort="phone">Telefon</th>
-                                        <th class="sort" data-sort="city">İl</th>
-                                        <th class="sort" data-sort="district">İlçe</th>
-                                        <th class="sort" data-sort="payment">Ödeme Şekli</th>
-                                        <th class="sort" data-sort="general_discount">Genel İskonto</th>
-                                        <th class="sort" data-sort="one_shot_discount">Tek Çekim İskonto</th>
-                                        <th class="sort" data-sort="advance_discount">Peşin İskonto</th>
-                                        <th class="sort" data-sort="action">İşlemler</th>
+                                        <th class="sort" data-sort="customer_name">AD/ÜNVAN</th>
+                                        <th class="sort" data-sort="phone">TELEFON</th>
+                                        <th class="sort" data-sort="city">İL</th>
+                                        <th class="sort" data-sort="district">İLÇE</th>
+                                        <th class="sort" data-sort="payment">ÖDEME ŞEKLİ</th>
+                                        <th class="sort" data-sort="general_discount">GENEL İSKONTO</th>
+                                        <th class="sort" data-sort="one_shot_discount">TEK ÇEKİM İSKONTO</th>
+                                        <th class="sort" data-sort="advance_discount">PEŞİN İSKONTO</th>
+                                        <th class="sort" data-sort="action">İŞLEMLER</th>
                                     </tr>
                                     </thead>
                                     <tbody class="list form-check-all">

@@ -2,7 +2,9 @@
 
 namespace App\Filters\Admin\SalesPayment;
 
+use Carbon\Carbon;
 use EloquentFilter\ModelFilter;
+use Illuminate\Support\Str;
 
 class PaymentFilter extends ModelFilter
 {
@@ -21,5 +23,23 @@ class PaymentFilter extends ModelFilter
         }
 
         return $this->whereDate('payment_date', '>=', $value);
+    }
+
+    public function dates($value)
+    {
+        if (is_null($value)) {
+            return $this;
+        }
+
+        if (Str::contains($value,  '-')) {
+            $dates = explode(' - ', $value);
+            if (count($dates) === 2) {
+                return $this->whereBetween('payment_date', [
+                    Carbon::parse($dates[0])->startOfDay(),
+                    Carbon::parse($dates[1])->endOfDay(),
+                ]);
+            }
+        }
+        return $this;
     }
 }

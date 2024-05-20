@@ -125,7 +125,7 @@ class OrderController extends Controller
             ->orderByDesc('id')
             ->paginate(20);
 
-        return view('admin.order.completed', compact('orders'));
+        return view('admin.order.cancelled', compact('orders'));
     }
 
     /**

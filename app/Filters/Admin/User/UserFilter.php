@@ -25,7 +25,7 @@ class UserFilter extends ModelFilter
         }
 
         return $this->where(function($query) use ($value) {
-            $query->whereLike('name', $value)
+            $query->whereLike('username', $value)
                 ->orWhereLike('name', $value);
         });
     }
@@ -39,5 +39,14 @@ class UserFilter extends ModelFilter
         return $this->whereHas('company', function ($query) use ($value) {
             $query->whereLike('name', $value);
         });
+    }
+
+    public function status($value)
+    {
+        if (is_null($value)) {
+            return $this;
+        }
+
+        return $this->where('status', $value);
     }
 }

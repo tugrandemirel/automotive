@@ -3,7 +3,8 @@
     use App\Enum\Company\CompanyCurrentCanPayEnum;use App\Enum\Product\ProductUnitEnum;use App\Enum\User\UserStatusEnum;
 @endphp
 @extends('admin.layouts.app')
-
+@push('css')
+@endpush
 @section('content')
 
     <div class="row">
@@ -43,9 +44,15 @@
                 <div class="card-body border border-dashed border-end-0 border-start-0">
                     <form id="searchForm">
                         <div class="row g-3">
-                            <div class="col-xxl-5 col-sm-6">
+                            <div class="col-xxl-3 col-sm-6">
                                 <div class="search-box">
                                     <input type="text" class="form-control search" name="name" value="{{ request()->get('name')  }}" placeholder="Ürün Adı Giriniz">
+                                    <i class="ri-search-line search-icon"></i>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-sm-6">
+                                <div class="search-box">
+                                    <input type="text" class="form-control search" name="ref" value="{{ request()->get('ref')  }}" placeholder="Ürün Referans Kodu Giriniz">
                                     <i class="ri-search-line search-icon"></i>
                                 </div>
                             </div>
@@ -62,7 +69,6 @@
                                     @if(count(request()->all()) > 0)
                                     <button type="button" onclick="location.href = '{{route('admin.product.index')}}'" class="btn btn-danger w-100" ><i
                                             class="ri-delete-bin-5-line"></i>
-
                                     </button>
                                     @endif
                                 </div>
@@ -117,10 +123,10 @@
                                             @endif
                                         </td>
                                         <td class="purchase_price">
-                                            {{ $product?->purchase_price ?? '-' }}
+                                            {{ number_format($product?->purchase_price, 2) ?? '-' }}
                                         </td>
                                         <td class="sale_price">
-                                            {{ $product?->sale_price ?? '-' }}
+                                            {{ number_format($product?->sale_price, 2) ?? '-' }}
                                         </td>
                                         <td class="quantity">
                                             {{ $product?->quantity ?? '-' }}

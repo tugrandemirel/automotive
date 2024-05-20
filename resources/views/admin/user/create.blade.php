@@ -48,21 +48,24 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="mb-3">
+                                            <label class="form-label" for="manufacturer-name-input">Firmalar:</label>
+                                            <select class="form-control company" name="company">
+                                                @forelse($companies as $company)
+                                                    <option value="{{ $company?->id }}" @selected(old('company') === $company?->id)>{{ $company?->name }}</option>
+                                                @empty
+                                                    <option value="">LÜTFEN FİRMA OLUŞTURUNUZ</option>
+                                                @endforelse
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
                                             <label class="form-label" for="manufacturer-name-input">Kullanıcı
                                                 Adı:</label>
                                             <input type="text"
                                                    class="form-control @error('username') is-invalid @enderror"
                                                    value="{{ old('username') }}"
                                                    name="username">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label class="form-label" for="manufacturer-name-input">Telefon:</label>
-                                            <input type="text" class="form-control phone @error('phone') is-invalid @enderror"
-                                                   placeholder="(xxx)xxx-xxxx"
-                                                   value="{{ old('phone') }}"
-                                                   name="phone">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -84,8 +87,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-3">
-                                            <label class="form-label" for="manufacturer-name-input">Kulanıcı
-                                                Durumu:</label>
+                                            <label class="form-label" for="manufacturer-name-input">Kulanıcı Durumu:</label>
                                             <select class="form-control" name="status">
                                                 <option value="{{ UserStatusEnum::ACTIVE }}" @selected(old('status') === UserStatusEnum::ACTIVE)>Aktif</option>
                                                 <option value="{{ UserStatusEnum::PASSIVE }}" @selected(old('status') === UserStatusEnum::PASSIVE)>Pasif</option>
@@ -94,14 +96,11 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-3">
-                                            <label class="form-label" for="manufacturer-name-input">Firmalar:</label>
-                                            <select class="form-control company" name="company">
-                                             @forelse($companies as $company)
-                                                    <option value="{{ $company?->id }}" @selected(old('company') === $company?->id)>{{ $company?->name }}</option>
-                                                @empty
-                                                    <option value="">LÜTFEN FİRMA OLUŞTURUNUZ</option>
-                                                @endforelse
-                                            </select>
+                                            <label class="form-label" for="manufacturer-name-input">Telefon:</label>
+                                            <input type="text" class="form-control phone @error('phone') is-invalid @enderror"
+                                                   placeholder="(xxx)xxx-xxxx"
+                                                   value="{{ old('phone') }}"
+                                                   name="phone">
                                         </div>
                                     </div>
                                 </div>

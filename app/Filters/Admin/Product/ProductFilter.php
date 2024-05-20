@@ -2,7 +2,9 @@
 
 namespace App\Filters\Admin\Product;
 
+use Carbon\Carbon;
 use EloquentFilter\ModelFilter;
+use Illuminate\Support\Str;
 
 class ProductFilter extends ModelFilter
 {
@@ -26,5 +28,14 @@ class ProductFilter extends ModelFilter
 
         return $this->whereLike('name', $value)
             ->orWhereLike('code', trim($value));
+    }
+
+    public function ref($value)
+    {
+        if (is_null($value)) {
+            return $this;
+        }
+
+        return $this->whereLike('code', trim($value));
     }
 }

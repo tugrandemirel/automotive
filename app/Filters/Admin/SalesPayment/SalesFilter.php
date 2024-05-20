@@ -2,7 +2,9 @@
 
 namespace App\Filters\Admin\SalesPayment;
 
+use Carbon\Carbon;
 use EloquentFilter\ModelFilter;
+use Illuminate\Support\Str;
 
 class SalesFilter extends ModelFilter
 {
@@ -41,5 +43,22 @@ class SalesFilter extends ModelFilter
         return $this->whereHas('user', function ($query) use ($value) {
             $query->where('username', $value);
         });
+    }
+
+    public function dates($value)
+    {
+        if (is_null($value)) {
+            return $this;
+        }
+        if (Str::contains($value,  '-')) {
+            $dates = explode(' - ', $value);
+            if (count($dates) === 2) {
+                return $this->whereBetween('created_at', [
+                    Carbon::parse($dates[0])->startOfDay(),
+                    Carbon::parse($dates[1])->endOfDay(),
+                ]);
+            }
+        }
+        return $this;
     }
 }

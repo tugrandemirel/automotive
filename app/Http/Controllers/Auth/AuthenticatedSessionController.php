@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Enum\User\UserRoleEnum;
+use App\Enum\User\UserStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;

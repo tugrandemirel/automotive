@@ -14,23 +14,22 @@
                     <div>
                         <select class="form-control" onchange="document.getElementById('filterForm').submit()"
                                 name="status" id="idStatus">
-
                             <option value="" @selected(is_null(request()->get('status'))) selected>Sipariş Durumu
                             </option>
                             <option
-                                value="{{ OrderStatusEnum::PENDING }}" @selected(request()->get('status') == OrderStatusEnum::PENDING->value)>
+                                value="{{ OrderStatusEnum::PENDING }}" @selected(request()->get('status') === (string)OrderStatusEnum::PENDING->value)>
                                 Bekleyen
                             </option>
                             <option
-                                value="{{ OrderStatusEnum::PROCESSING }}" @selected(request()->get('status') == OrderStatusEnum::PROCESSING->value)>
+                                value="{{ OrderStatusEnum::PROCESSING }}" @selected(request()->get('status') === (string)OrderStatusEnum::PROCESSING->value)>
                                 Hazırlanan
                             </option>
                             <option
-                                value="{{ OrderStatusEnum::SHIPPED }}" @selected(request()->get('status') == OrderStatusEnum::SHIPPED->value)>
+                                value="{{ OrderStatusEnum::SHIPPED }}" @selected(request()->get('status') === (string)OrderStatusEnum::SHIPPED->value)>
                                 Yolda
                             </option>
                             <option
-                                value="{{ OrderStatusEnum::COMPLETED }}" @selected(request()->get('status') == OrderStatusEnum::COMPLETED->value)>
+                                value="{{ OrderStatusEnum::COMPLETED }}" @selected(request()->get('status') === (string)OrderStatusEnum::COMPLETED->value)>
                                 Teslim Edilen
                             </option>
                             <option
@@ -41,6 +40,9 @@
                     </div>
                 </div>
             @endif
+            <div class="col-xxl-3 col-sm-6">
+                <input type="text" class="form-control" name="dates" value="{{ request()->get('dates') }}" placeholder="Tarih Aralığı Giriniz">
+            </div>
             <!--end col-->
             <!--end col-->
             <div class="col-xxl-1 col-sm-4">

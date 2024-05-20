@@ -151,6 +151,12 @@
                                     <!-- end col -->
                                 </div>
                                 <div class="row mb-3">
+                                    <h5 class="fs-13 mb-1">Açıklama Not:</h5>
+                                    <div class="fallback">
+                                        <textarea name="description" class="form-control" id="" cols="30" rows="10">{{ old('description') }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
                                     <h5 class="fs-13 mb-1">Dosya:</h5>
                                     <div class="fallback">
                                         <input name="file" type="file" multiple="multiple">

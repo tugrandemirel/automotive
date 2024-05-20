@@ -41,7 +41,7 @@
                             <div class="row g-3">
                                 <div class="col-xxl-4 col-sm-6">
                                     <div class="search-box">
-                                        <input type="date" class="form-control search" name="date" value="{{ request()->get('date') }}" placeholder="Tarih seçiniz">
+                                        <input type="text" class="form-control" name="dates" value="{{ request()->get('dates') }}" placeholder="Tarih Aralığı Giriniz">
                                         <i class="ri-calendar-2-fill search-icon"></i>
                                     </div>
                                 </div>
@@ -70,7 +70,7 @@
                                     <tr class="text-uppercase">
                                         <th data-sort="code">SİPARİŞ KODU</th>
                                         <th data-sort="created_at">ÖDEME TARİHİ</th>
-                                        <th data-sort="description">DESCRİPTİON</th>
+                                        <th data-sort="description">AÇIKLAMA</th>
                                         <th data-sort="amount">ÜRÜN TUTARI</th>
                                         <th data-sort="payment">ÖDEME YÖNTEMİ</th>
                                         <th data-sort="process">İŞLEMLER</th>
@@ -87,7 +87,7 @@
                                                     {{ $salesPayment?->payment_method_formatted ??'-' }}
                                                 </span>
                                             </td>
-                                            <td class="">{{ $salesPayment?->payment_date->format('d/m/y') ?? '-' }}</td>
+                                            <td class="">{{ $salesPayment?->payment_date->format('Y/m/d') ?? '-' }}</td>
                                             <td class="">{{ $salesPayment?->description ?? '-' }}</td>
 
                                             <td class="">{{ $salesPayment?->amount ?? 0 }}</td>

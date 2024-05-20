@@ -42,13 +42,13 @@
                                 </div>
                                 <div class="col-xxl-4 col-sm-6">
                                     <div class="search-box">
-                                        <input type="date" class="form-control search" name="date" value="{{ request()->get('date') }}" placeholder="Tarih seçiniz">
-                                        <i class="ri-calendar-2-fill search-icon"></i>
+                                        <input type="user" class="form-control search" name="user" value="{{ request()->get('user') }}" placeholder="Sipariş veren giriniz">
+                                        <i class="ri-user-2-fill search-icon"></i>
                                     </div>
                                 </div>
-                                <div class="col-xxl-4 col-sm-6">
+                                <div class="col-xxl-3 col-sm-6">
                                     <div class="search-box">
-                                        <input type="user" class="form-control search" name="user" value="{{ request()->get('user') }}" placeholder="Sipariş veren giriniz">
+                                        <input type="text" class="form-control" name="dates" value="{{ request()->get('dates') }}" placeholder="Tarih Aralığı Giriniz">
                                         <i class="ri-calendar-2-fill search-icon"></i>
                                     </div>
                                 </div>
@@ -78,7 +78,7 @@
                                         <th data-sort="code">SİPARİŞ KODU</th>
                                         <th data-sort="created_at">SİPARİŞ TARİHİ</th>
                                         <th data-sort="product_name">SİPARİŞ VEREN</th>
-                                        <th data-sort="amount">ÜRÜN TUTARI</th>
+                                        <th data-sort="amount">SİPARİŞ TUTARI</th>
                                         <th data-sort="payment">ÖDEME YÖNTEMİ</th>
                                         <th data-sort="action">İŞLEMLER</th>
                                     </tr>
@@ -87,7 +87,7 @@
                                     @foreach($orders as $order)
                                         <tr>
                                             <td class="code">{{ $order?->code ?? '-' }}</td>
-                                            <td class="created_at">{{ $order?->created_at->format('d/m/y') ?? '-' }}</td>
+                                            <td class="created_at">{{ $order?->created_at->format('Y/m/d') ?? '-' }}</td>
                                             <td class="name">
                                                 {{ $order?->user?->username ??'-' }}
                                             </td>

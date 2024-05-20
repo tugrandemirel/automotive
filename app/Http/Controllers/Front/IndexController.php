@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Enum\Product\ProductStatusEnum;
+use App\Enum\User\UserRoleEnum;
 use App\Filters\Front\Product\ProductFilter;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
@@ -11,9 +12,20 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class IndexController extends Controller
 {
+    public function __construct()
+    {
+        if (auth()->check()) {
+            if (auth()->user()->role === UserRoleEnum::ADMIN) {
+                return to_route('admin.index');
+            }
+        }
+        Redirect::to('login')->send();
+    }
+
     /**
      * @param Request $request
      * @return View|Application|Factory|\Illuminate\Contracts\Foundation\Application
