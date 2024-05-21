@@ -33,6 +33,11 @@ class AuthenticatedSessionController extends Controller
 
         $user = auth()->user();
 
+        if ($user->status == UserStatusEnum::PASSIVE) {
+            Auth::logout();
+            return redirect()->to('login');
+        }
+
         return match ($user?->role) {
             UserRoleEnum::ADMIN => to_route('admin.index'),
             UserRoleEnum::USER => to_route('home')

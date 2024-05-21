@@ -16,16 +16,6 @@ use Illuminate\Support\Facades\Redirect;
 
 class IndexController extends Controller
 {
-    public function __construct()
-    {
-        if (auth()->check()) {
-            if (auth()->user()->role === UserRoleEnum::ADMIN) {
-                return to_route('admin.index');
-            }
-        }
-        Redirect::to('login')->send();
-    }
-
     /**
      * @param Request $request
      * @return View|Application|Factory|\Illuminate\Contracts\Foundation\Application

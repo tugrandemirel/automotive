@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Enum\User\UserStatusEnum;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -36,23 +37,28 @@ class LoginRequest extends FormRequest
      * Attempt to authenticate the request's credentials.
      *
      * @throws \Illuminate\Validation\ValidationException
+     * @throws \Throwable
      */
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
         $credentials = $this->only('username', 'password');
 
-        if (Auth::attempt(['username' => $credentials['username'], 'password' => $credentials['password']]) ||
-            Auth::attempt(['email' => $credentials['username'], 'password' => $credentials['password']])) {
+        RateLimiter::hit($this->throttleKey());
 
-//            if (! Auth::attempt($this->only('username', 'password'), $this->boolean('remember'))) {
+        $authenticated = Auth::attempt(['username' => $credentials['username'], 'password' => $credentials['password']]);
 
-            RateLimiter::hit($this->throttleKey());
-
-            throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
-            ]);
+        if (!$authenticated) {
+            $authenticated = Auth::attempt(['email' => $credentials['username'], 'password' => $credentials['password']]);
         }
+
+        throw_if(!$authenticated, ValidationException::withMessages([
+            'username' => trans('auth.failed'),
+        ]) , null);
+
+//        throw_if(auth()->user()->status == UserStatusEnum::PASSIVE, ValidationException::withMessages([
+//            'username' => 'Üyeliğiniz pasif durumda',
+//        ]), null);
 
         RateLimiter::clear($this->throttleKey());
     }
