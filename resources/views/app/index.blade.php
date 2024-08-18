@@ -117,7 +117,11 @@
                                         {{ $product?->brand?->name }}
                                     </td>
                                     <td>
+                                        @if($product?->quantity > 0)
                                         {{ $product?->stock }}
+                                            @else
+                                        YOK
+                                        @endif
                                     </td>
                                     <td>
                                         {{ $product?->unit_formatted }}
@@ -129,13 +133,19 @@
                                         <div class="pro-qty"><input type="text" class="quantity" title="Quantity" name="quantity" min="0" value="0"></div>
                                     </td>
                                     <td>
-                                        <button type="button" data-id="{{ $product?->id }}" class="btn btn-transparent btn-small add-product">
-                                            @if($product?->quantity == 0)
-                                                TEDARİK ET
-                                            @else
-                                                SEPETE EKLE
-                                            @endif
-                                        </button>
+                                        @if($product?->quantity <= 0)
+                                            <button type="button" class="btn btn-transparent btn-small">
+                                               STOKTA ÜRÜN YOK
+                                            </button>
+                                        @else
+                                            <button type="button" data-id="{{ $product?->id }}" class="btn btn-transparent btn-small add-product">
+                                                @if($product?->quantity == 0)
+                                                    TEDARİK ET
+                                                @else
+                                                    SEPETE EKLE
+                                                @endif
+                                            </button>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty
@@ -167,7 +177,7 @@
                     success: function (response) {
                         Swal.fire({
                             title: "Başarılı!",
-                            text: response.message,
+                            text: response.data[1],
                             icon: "success",
                             confirmButtonText: "Tamam!",
                         }).then((result) => {
@@ -177,12 +187,11 @@
                     error: function (error) {
                         Swal.fire({
                             title: "Hata!",
-                            text: error.message,
+                            text: error.responseJSON.error.message,
                             icon: "error",
                             confirmButtonText: "Tamam!",
                         }).then((result) => {
                             location.reload()
-
                         })
                     }
                 })
